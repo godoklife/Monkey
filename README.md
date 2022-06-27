@@ -13,16 +13,16 @@
 
 | 일차 | 현황 | 내용 |
 | ------ | --------- | ----------------------- |
-| 1일차 | :ballot_box_with_check: | Topic Selection |
-| 2일차 | :ballot_box_with_check: | Database Design |
-| 3일차 | :ballot_box_with_check: | Controller, Readme, Class Structure, Front Prototype |
-| 4일차 | :ballot_box_with_check: | DB생성 / 회원가입 |
-| 5일차 | :ballot_box_with_check: | 로그인 / 아이디 & 비밀번호 찾기 / 예매 control |
-| 6일차 | :ballot_box_with_check: | 예매 control |
-| 7일차 | :ballot_box_with_check: | 예매 control |
-| 8일차 | :ballot_box_with_check: | 환율 차트 control |
-| 9일차 |  | 관리자 / 회원 개인 페이지 |
-| 10일차|  | 점검 / 보완 | 
+| 1일차 | :ballot_box_with_check: | reserved |
+| 2일차 | :ballot_box_with_check: | reserved |
+| 3일차 | :ballot_box_with_check: | reserved |
+| 4일차 | :ballot_box_with_check: | reserved |
+| 5일차 | :ballot_box_with_check: | reserved |
+| 6일차 | :ballot_box_with_check: | reserved |
+| 7일차 | :ballot_box_with_check: | reserved |
+| 8일차 | :ballot_box_with_check: | reserved |
+| 9일차 |  | reserved |
+| 10일차|  | reserved | 
 
 ***
 
@@ -50,15 +50,9 @@
 
 ### 개발 우선순위
 + **1순위**
-  - 회원가입
-  - 로그인
-  - 예매
-  - DB 생성
+  - reserved
 + **2순위**
-  - 환율
-  - 관리자 페이지
-  - 마이 페이지
-  - 아디찾기 & 비밀번호 찾기
+  - reserved
 
 ***
 
