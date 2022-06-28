@@ -20,12 +20,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'org.json', name: 'json', version: '20220320'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
 // 이하 테스트용 dependencies'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    //testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
+    runtimeOnly 'com.h2database:h2' // H2 라이브러리 [관계형 데이터베이스 = 인메모리]
 }
 
 tasks.named('test') {
