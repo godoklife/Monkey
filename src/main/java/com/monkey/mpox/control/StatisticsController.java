@@ -35,4 +35,14 @@ public class StatisticsController {
     public Map getdatadate(){
         return statisticsService.getSortedByDate();
     }
+
+    // 구글지오차트에 쓸 국가별로 확진자 수 정리된 jsonArray
+    @GetMapping("/getgeochartdata")
+    public void getGeoChartData(){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().println(statisticsService.getSortedByCountry());
+        }catch (Exception e){System.out.println(e);}
+    }
 }

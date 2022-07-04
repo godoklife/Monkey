@@ -1,16 +1,17 @@
 package com.monkey.mpox.service;
 
+import com.google.gson.Gson;
 import com.monkey.mpox.dto.statistics.CommonChartData;
 import com.monkey.mpox.dto.statistics.GeoChartData;
 import com.monkey.mpox.dto.statistics.WorldwideDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -24,13 +25,15 @@ public class StatisticsService {
     List<CommonChartData> commonChartDataList = new ArrayList<>();  //putCommonChartDataList()에서 데이터 삽입
     List<GeoChartData> geoChartDataList = new ArrayList<>();         //putGeoChartDataList()에서 데이터 삽입
     List<String>countryList = new ArrayList<>();                    //putCommonChartDataList()에서 데이터 삽입
-    static Map<String, Map<String, Map<String, List<Map>>> > 메모리;
+
 
 
 
     public boolean loadData(){
 
-        boolean flag1 = getjsonFromServer();
+//        boolean flag1 = getjsonFromServer();
+            // @@@@@@@@@@@ 나중에 다시 열어놓을것, 반복적으로 다운로드하면 혼날까봐 잠깐 막음 @@@@@@@@@@@
+        boolean flag1 = true;
         boolean flag2 = putCommonChartDataList();
 
         if(flag1 && flag2)
@@ -42,6 +45,9 @@ public class StatisticsService {
     // json 파일을 서버로부터 다운로드 해오는 메소드
         // 중복되는 파일명이 있을 경우 덮어씌움.
     public boolean getjsonFromServer(){
+        if( ! commonChartDataList.isEmpty()){   // 새로고침 눌렀을 때 중복실행 방지
+            return true;
+        }
         String url = "https://raw.githubusercontent.com/globaldothealth/monkeypox/main/latest.json";
         URI uri = URI.create(url);
 
@@ -156,6 +162,9 @@ public class StatisticsService {
         // 2. 국가 코드를 변환 후
         // 3. JSONObject 단위로 List에 add
     public boolean putCommonChartDataList(){
+        if( ! commonChartDataList.isEmpty()){   // 새로고침 눌렀을 때 중복실행 방지
+            return true;
+        }
         try {
             JSONArray todayjsonArray = readjsonArrayFile();
             JSONObject iso2Object = readjsonObjectFile("iso3toiso2");
@@ -218,8 +227,8 @@ public class StatisticsService {
 
     // 호출시 WorldwideDto를 json배열화 해서 리턴하는 메서드
     public JSONObject getww(){
-        // todo: 현재 사용자가 geodata를 요청했는데 메모리에 json이 적재되어 있지 않으면 불러오는 구조임.
-        // 일정 시간이 되면 자동으로 업데이트 되도록 바꾸어야 함.
+        // 현재 사용자가 geodata를 요청했는데 메모리에 json이 적재되어 있지 않으면 불러오는 구조임.
+        // todo: 일정 시간이 되면 자동으로 업데이트 되도록 바꾸어야 함.
         if(todayWorldWideDto==null){
             getData();
         }
@@ -236,7 +245,7 @@ public class StatisticsService {
         jsonObject.put("발병국명단", jsonArray);
         jsonObject.put("발병국가수", todayWorldWideDto.getCountryCount());
 //        putCommonChartDataList();
-        putCountryList();
+//        putCountryList();
         return jsonObject;
     }
 
@@ -263,6 +272,9 @@ public class StatisticsService {
         Map<String, Integer> 확진자 = new HashMap<>();   // 확진자 를 담을 map
         Map<String, Integer> 유증상자 = new HashMap<>();   // 유증상자 를 담을 map
         Map<String, String> 한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+
+        int totalConfirmed=0;
+        int totalsuspected=0;
 
         for (int i=0; i<commonChartDataList.size(); i++) {
 
@@ -296,12 +308,12 @@ public class StatisticsService {
 
                             int i1 = (int) 메모리.get("data").get(date).get(iso).get(1).get("확진자");
                             메모리.get("data").get(date).get(iso).get(1).put("확진자" , i1+1 );
-
+                            totalConfirmed++;
                         } else if (status.equals("suspected")) {
 
                             int i1 = (int) 메모리.get("data").get(date).get(iso).get(2).get("유증상자");
                             메모리.get("data").get(date).get(iso).get(2).put("유증상자" , i1+1 );
-
+                            totalsuspected++;
                         }
                         
                     }else {
@@ -317,9 +329,11 @@ public class StatisticsService {
                         if (status.equals("confirmed")) {
                             확진자.put("확진자", 1);
                             유증상자.put("유증상자", 0);
+                            totalConfirmed++;
                         } else if (status.equals("suspected")) {
                             확진자.put("확진자", 0);
                             유증상자.put("유증상자", 1);
+                            totalsuspected++;
                         } else {
                             확진자.put("확진자",0);
                             유증상자.put("유증상자",0);
@@ -348,9 +362,11 @@ public class StatisticsService {
                     if (status.equals("confirmed")) {
                         확진자.put("확진자", 1);
                         유증상자.put("유증상자", 0);
+                        totalConfirmed++;
                     } else if (status.equals("suspected")) {
                         확진자.put("확진자", 0);
                         유증상자.put("유증상자", 1);
+                        totalsuspected++;
                     } else {
                         확진자.put("확진자",0);
                         유증상자.put("유증상자",0);
@@ -366,8 +382,71 @@ public class StatisticsService {
                 }
             }
         }
+//        메모리.get("data").put("총확진자",totalConfirmed);
+//        메모리.get("data").put("총확진자",totalsuspected);
+
+
         return 메모리;
     }
+
+    public JSONArray getSortedByCountry(){
+
+
+
+        // 만들고자 하는 json 형태
+        // [ { 코드 : KR , 국가명 : 대한민국 , 확진자 : 10 }  ,
+        //   { 코드 : CN , 국가명 : 중국 , 확진자 : 10,000 } ]
+        int totalConfirmed = 0; // 총 확진자수
+        JSONArray jsonArray = new JSONArray();
+
+        TreeSet<String> set = new TreeSet<>();// 중복값 걸러내기용
+        for (int i=0; i<commonChartDataList.size(); i++){
+            set.add(commonChartDataList.get(i).getCountryISO2());
+        }
+
+        List<String> isoList = new ArrayList<>(set);    // 중복없는 iso 목록 담겨있음
+
+        for (int i=0; i<isoList.size(); i++){
+            JSONObject object = new JSONObject();
+            object.put("확진자",0);
+            object.put("국가명","");
+            object.put("ISO",isoList.get(i));
+            jsonArray.put(object);
+        }
+
+        for (int i=0; i<commonChartDataList.size(); i++){
+            String date = commonChartDataList.get(i).getDate();
+            String iso = commonChartDataList.get(i).getCountryISO2();
+            String country = commonChartDataList.get(i).getCountry();
+            String status = commonChartDataList.get(i).getStatus();
+            for(int j=0; j< jsonArray.length(); j++) {
+                if (jsonArray.getJSONObject(j).get("ISO").equals(iso) && status.equals("confirmed")) {    // 동일한 iso코드가 담긴 오브젝트를 찾아서
+                    int tmp = jsonArray.getJSONObject(j).getInt("확진자");
+                    jsonArray.getJSONObject(j).put("확진자",tmp+1);
+                    jsonArray.getJSONObject(j).put("국가명",country);
+                    totalConfirmed++;
+                }
+            }
+        }
+
+        // 비감염자나 유증상자만 있는 국가 제거
+        for(int i= jsonArray.length()-1;i>=0; i--){
+            if(jsonArray.getJSONObject(i).getInt("확진자")==0){
+                jsonArray.remove(i);
+            }
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("확진자총합",totalConfirmed);
+        jsonArray.put(jsonObject);
+        System.out.println(jsonArray);
+
+        return jsonArray;
+    }
+
+}
+
+
 
 //
 //        Map<String, Map<String, List<Map>>> 메모리 = new HashMap<>();  // 날짜 -> 메모리 deepcopy
@@ -489,7 +568,7 @@ public class StatisticsService {
 //        return 날짜;
 //    }
 
-}
+
 
 
                          // 강사님한테 질문할 코드
