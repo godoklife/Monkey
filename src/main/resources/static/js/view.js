@@ -1,21 +1,20 @@
-// 구글 지오챠트 불러오기
+getTable();
+
+
 
 function getdataDate(){
     $.ajax({
-        url:'/getdataDate',
+        url:'/statistics/getdatadate',
         success:function (jsonarray){
             console.log(jsonarray);
-            alert('getdataDate 수신 성공');
         }
     })
 }
 
 
-
-
 function getTable(){
     $.ajax({
-        url:'/viewgeo',
+        url:'/statistics/viewgeo',
         data:{},
         method:'GET',
         success:function (jsonObject){

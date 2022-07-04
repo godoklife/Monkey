@@ -6,17 +6,148 @@ import com.monkey.mpox.dto.statistics.WorldwideDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.*;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
 public class StatisticsService {
-    @Autowired JsonService jsonService;
+
     WorldwideDto todayWorldWideDto;
     List<CommonChartData> commonChartDataList = new ArrayList<>();  //putCommonChartDataList()에서 데이터 삽입
     List<GeoChartData> geoChartDataList = new ArrayList<>();         //putGeoChartDataList()에서 데이터 삽입
     List<String>countryList = new ArrayList<>();                    //putCommonChartDataList()에서 데이터 삽입
+    static Map<String, Map<String, Map<String, List<Map>>> > 메모리;
+
+
+
+    public boolean loadData(){
+
+        boolean flag1 = getjsonFromServer();
+        boolean flag2 = putCommonChartDataList();
+
+        if(flag1 && flag2)
+            return true;
+        else
+            return false;
+    }
+
+    // json 파일을 서버로부터 다운로드 해오는 메소드
+        // 중복되는 파일명이 있을 경우 덮어씌움.
+    public boolean getjsonFromServer(){
+        String url = "https://raw.githubusercontent.com/globaldothealth/monkeypox/main/latest.json";
+        URI uri = URI.create(url);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> result = restTemplate.getForEntity(uri,String.class);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String nowDate = dtf.format(LocalDate.now());
+        // todo: 배포할 때 경로 수정 요
+        String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
+        try {
+            File file = new File(dir,nowDate+".json");
+            FileOutputStream fos =new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bos.write(result.getBody().getBytes(StandardCharsets.UTF_8));
+
+            bos.close();
+            fos.close();
+            return true;
+        } catch (IOException e) {
+            System.out.println("StoringService_autoUpdateJson()_exception : "+e);
+            return false;
+        }
+    }
+
+    // 1. 오늘 날짜 이름을 가진 .json 파일을 읽어서
+    //      1-1) 만약 해당 파일이 없다면 getjsonFromServer() 호출 -> json파일 소스에서 다운로드
+    // 2. JSONArray 형태로 변환 후 리턴
+    public JSONArray readjsonArrayFile(){
+        byte failCount=0;
+        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json";
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String nowDate = dtf.format(LocalDate.now());
+        File file = new File(dir+"/"+nowDate+".json");
+        if( ! file.isFile() ) {        // 만약 해당 날짜의 json파일이 없다면 ->> 날짜가 바뀌었다면
+            System.out.println("readjsonArrayFile() : ["+nowDate+".json] 이 없습니다. 소스에서 다운로드 시작");
+            while (failCount<2){   // 2회 반복
+                System.out.println("readjsonArrayFile() : 파일 다운로드 실패, "+(failCount+1)+"번째 재시도...");
+                getjsonFromServer();
+                if (file.isFile()) {    // 파일이 정상적으로 생성되었다면 while문 탈출
+                    break;
+                }
+                else {                  // 실패했다면 3초 대기 후 다시 실행
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {throw new RuntimeException(e);}
+                    failCount++;
+                }
+            }
+        }
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            byte[] bytes = new byte[fis.available()];
+            bis.read(bytes);
+
+            bis.close();
+            fis.close();
+            JSONArray jsonArray = new JSONArray(new String(bytes));
+
+            return jsonArray;
+        }catch (Exception e){System.out.println("readJsonFile()_exception : "+e);}
+
+        return new JSONArray();
+    }
+    public JSONArray readjsonArrayFile(String jsonFileName){
+
+        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
+
+
+        File file = new File(dir+jsonFileName+".json");
+        byte[] bytes = new byte[0];
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            bytes = new byte[fis.available()];
+            bis.read(bytes);
+
+            bis.close();
+            fis.close();
+        }catch (Exception e){System.out.println("readJsonFile()_exception : "+e);}
+
+        JSONArray jsonArray = new JSONArray(new String(bytes));
+
+        return jsonArray;
+    }   // 삭제 ㄴㄴ 쓸곳있음 수도...
+    public JSONObject readjsonObjectFile(String jsonFileName){
+
+        // todo: 배포시 경로 변경 요
+        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
+
+        File file = new File(dir+jsonFileName+".json");
+        byte[] bytes = new byte[0];
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            bytes = new byte[fis.available()];
+            bis.read(bytes);
+
+            bis.close();
+            fis.close();
+        }catch (Exception e){System.out.println("readJsonFile()_exception : "+e);}
+
+        return new JSONObject(new String(bytes));
+    }
 
 
     // json을 List<CommonChartData> 형태로 메모리에 적재
@@ -24,25 +155,27 @@ public class StatisticsService {
             // (1) 날짜별 감염자 리스트 (2) 국가 3자리코드-> 2자리코드 변환용 json (3) 국가 3자리코드 -> 우리말 변환용 json
         // 2. 국가 코드를 변환 후
         // 3. JSONObject 단위로 List에 add
-    public void putCommonChartDataList(){
-        JSONArray todayjsonArray = jsonService.readjsonArrayFile();
-        JSONObject iso2Object = jsonService.readjsonObjectFile("iso3toiso2");
-        JSONObject koreanObject = jsonService.readjsonObjectFile("iso3tokorean");
-        for(int i=0; i<todayjsonArray.length(); i++){
-            JSONObject tmpObject =  todayjsonArray.getJSONObject(i);
-            CommonChartData tmpChartData = CommonChartData.builder()
-                    .status( tmpObject.getString("Status"))
-                    .country(koreanObject.getString(tmpObject.getString("Country_ISO3")))
-                        //  iso3306 3자리코드 -> 우리말 국가명으로 변환
-                    .countryISO2( iso2Object.getString(tmpObject.getString("Country_ISO3")))
+    public boolean putCommonChartDataList(){
+        try {
+            JSONArray todayjsonArray = readjsonArrayFile();
+            JSONObject iso2Object = readjsonObjectFile("iso3toiso2");
+            JSONObject koreanObject = readjsonObjectFile("iso3tokorean");
+            for(int i=0; i<todayjsonArray.length(); i++){
+                JSONObject tmpObject =  todayjsonArray.getJSONObject(i);
+                CommonChartData tmpChartData = CommonChartData.builder()
+                        .status( tmpObject.getString("Status"))
+                        .country(koreanObject.getString(tmpObject.getString("Country_ISO3")))
+                        // iso3306 3자리코드 -> 우리말 국가명으로 변환
+                        .countryISO2( iso2Object.getString(tmpObject.getString("Country_ISO3")))
                         // iso3306 3자리코드 -> iso3306 2자리코드로 변환
-                    .source( tmpObject.getString("Source"))
-                    .date( tmpObject.getString("Date_entry"))
-                    .build();
-            commonChartDataList.add(tmpChartData);
-        }
-
-        System.out.println(commonChartDataList.toString());
+                        .source( tmpObject.getString("Source"))
+                        .date( tmpObject.getString("Date_entry"))
+                        .build();
+                commonChartDataList.add(tmpChartData);
+            }
+            return true;
+        }catch (Exception e) {System.out.println("putCommonChartDataList_Exception : "+e);}
+        return false;
     }
 
 
@@ -53,7 +186,6 @@ public class StatisticsService {
             set.add(commonChartDataList.get(i).getCountry());
         }
         countryList = new ArrayList<>(set);
-        System.out.println(countryList);
     }
 
     // 오늘의 json파일(파일명 형식:yyyyMMdd.json)을 해석해서 Dto에 저장
@@ -61,7 +193,7 @@ public class StatisticsService {
         // :Todo 나중에 getData()는 일정시간마다->> 매 02시쯤? 실행되도록 @수정 필요
         // 22.06.30 00:55 json파일 읽는 시점에 파일이 없을경우 서버에서 불러오도록 로직 수정됨
     public void getData(){
-        JSONArray todayjsonArray = jsonService.readjsonArrayFile();
+        JSONArray todayjsonArray = readjsonArrayFile();
         int confirmedData=0;
         int suspectedData=0;
         Set<String> tmpSet = new HashSet<>();   // 중복값 제거키 위한 Set 사용
@@ -74,7 +206,7 @@ public class StatisticsService {
             tmpSet.add((String) tmp.get("Country_ISO3"));
         }
         List<String> countryList = new ArrayList<String>(tmpSet);   // Set-> List 변환
-        JSONObject countryName = jsonService.readjsonObjectFile("iso3tokorean");
+        JSONObject countryName = readjsonObjectFile("iso3tokorean");
         for(int i=0; i<countryList.size(); i++){
           countryList.set(i, (String) countryName.get(countryList.get(i))); // 리스트에 담긴 국가명 한글화(json->List)
         }
@@ -82,11 +214,7 @@ public class StatisticsService {
 
         todayWorldWideDto = new WorldwideDto(confirmedData,suspectedData,countryList,countryList.size());
             // 메모리에 싣기
-        System.out.println("생성된 데이타 : "+todayWorldWideDto.toString());
     }
-
-
-
 
     // 호출시 WorldwideDto를 json배열화 해서 리턴하는 메서드
     public JSONObject getww(){
@@ -102,19 +230,28 @@ public class StatisticsService {
         }
         jsonArray.put(jsonObject);
 
-//        jsonObject.clear();   // 쓰니까 오버플로뜸. 왜지?????
         jsonObject = new JSONObject();
         jsonObject.put("확진자", todayWorldWideDto.getConfirmed());
         jsonObject.put("유증상자", todayWorldWideDto.getSuspected());
         jsonObject.put("발병국명단", jsonArray);
         jsonObject.put("발병국가수", todayWorldWideDto.getCountryCount());
-        putCommonChartDataList();
+//        putCommonChartDataList();
         putCountryList();
         return jsonObject;
     }
 
     // 국가별 총 확진자, 유증상자 데이타 집계 후 Map 형태로 리턴
     public Map getSortedByDate(){
+
+        // 만들고자 하는 형식
+        // [ { 2022-05-18 : { KR : [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] ,
+        //                  { JP : [ { 국가명 : 일본 }, { 확진자 : 30 }, { 유증상자 : 100 } ] } } ,
+        //
+        //   { 2022-05-19 : { KR : [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] ,
+        //                  { JP : [ { 국가명 : 일본 }, { 확진자 : 30 }, { 유증상자 : 100 } ] },
+        //                  { CN : [ { 국가명 : 중국 }, { 확진자 : 30 }, { 유증상자 : 100 } ] } }
+        // ]
+
         Map<String, Map<String, Map<String, List<Map>>> > 메모리 = new HashMap<>();  // 날짜 : value 를 담을 map
 
         Map<String, Map<String, List<Map>>> 날짜 = new HashMap<>();  // 날짜 : value 를 담을 map
@@ -133,7 +270,6 @@ public class StatisticsService {
             String iso = commonChartDataList.get(i).getCountryISO2();
             String country = commonChartDataList.get(i).getCountry();
             String status = commonChartDataList.get(i).getStatus();
-
             if (i == 0) {
                 if (commonChartDataList.get(i).getStatus().equals("confirmed")) {
                     확진자.put("확진자", 1);
@@ -152,7 +288,7 @@ public class StatisticsService {
 
             }else {
 
-                if ( commonChartDataList.get(i-1).getDate().equals(date) ) {    // 동일날짜 인지 확인
+                if ( 메모리.get("data").keySet().contains(date) ) {    // 메모리map에 해당 날짜가 있는지 확인
 
                     if (메모리.get("data").get(date).containsKey(iso)){    //
 
@@ -169,8 +305,7 @@ public class StatisticsService {
                         }
                         
                     }else {
-
-                        코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+                        코드명 = new HashMap<>();   // isocode2 : value 를 담을 map
 
                         맵을담은리스트 = new ArrayList<>();
                         // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
@@ -199,6 +334,7 @@ public class StatisticsService {
                     }
 
                 } else { // 동일 날짜가 아니라면
+
                     날짜 = new HashMap<>();  // 날짜 : value 를 담을 map
                     코드명= new HashMap<>();   // isocode2 : value 를 담을 map
 
@@ -227,21 +363,12 @@ public class StatisticsService {
                     코드명.put(iso, 맵을담은리스트);
                     날짜.put(date, 코드명);
                     메모리.get("data").putAll( 날짜 );
-                    System.out.println( 메모리);
                 }
             }
         }
         return 메모리;
     }
 
-        // 만들고자 하는 형식
-        // [ { 2022-05-18 : { KR : [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] ,
-        //                  { JP : [ { 국가명 : 일본 }, { 확진자 : 30 }, { 유증상자 : 100 } ] } } ,
-        //
-        //   { 2022-05-19 : { KR : [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] ,
-        //                  { JP : [ { 국가명 : 일본 }, { 확진자 : 30 }, { 유증상자 : 100 } ] },
-        //                  { CN : [ { 국가명 : 중국 }, { 확진자 : 30 }, { 유증상자 : 100 } ] } }
-        // ]
 //
 //        Map<String, Map<String, List<Map>>> 메모리 = new HashMap<>();  // 날짜 -> 메모리 deepcopy
 //        Map<String, Map<String, List<Map>>> 메모리2 = new HashMap<>();  // 메모리 -> 메모리2 누적

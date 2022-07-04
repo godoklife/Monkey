@@ -3,7 +3,7 @@ readJson();
 
 function readJson(){
     $.ajax({
-        url:'/readjsonfile',
+        url:'/statistics/readjsonfile',
         data:{},
         method:'GET',
         success:function (args){
