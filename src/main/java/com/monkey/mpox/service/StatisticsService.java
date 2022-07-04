@@ -1,0 +1,429 @@
+package com.monkey.mpox.service;
+
+import com.monkey.mpox.dto.statistics.CommonChartData;
+import com.monkey.mpox.dto.statistics.GeoChartData;
+import com.monkey.mpox.dto.statistics.WorldwideDto;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+public class StatisticsService {
+    @Autowired JsonService jsonService;
+    WorldwideDto todayWorldWideDto;
+    List<CommonChartData> commonChartDataList = new ArrayList<>();  //putCommonChartDataList()에서 데이터 삽입
+    List<GeoChartData> geoChartDataList = new ArrayList<>();         //putGeoChartDataList()에서 데이터 삽입
+    List<String>countryList = new ArrayList<>();                    //putCommonChartDataList()에서 데이터 삽입
+
+
+    // json을 List<CommonChartData> 형태로 메모리에 적재
+        // 1. 파일처리된 json을 JSONArray로 읽어들이고
+            // (1) 날짜별 감염자 리스트 (2) 국가 3자리코드-> 2자리코드 변환용 json (3) 국가 3자리코드 -> 우리말 변환용 json
+        // 2. 국가 코드를 변환 후
+        // 3. JSONObject 단위로 List에 add
+    public void putCommonChartDataList(){
+        JSONArray todayjsonArray = jsonService.readjsonArrayFile();
+        JSONObject iso2Object = jsonService.readjsonObjectFile("iso3toiso2");
+        JSONObject koreanObject = jsonService.readjsonObjectFile("iso3tokorean");
+        for(int i=0; i<todayjsonArray.length(); i++){
+            JSONObject tmpObject =  todayjsonArray.getJSONObject(i);
+            CommonChartData tmpChartData = CommonChartData.builder()
+                    .status( tmpObject.getString("Status"))
+                    .country(koreanObject.getString(tmpObject.getString("Country_ISO3")))
+                        //  iso3306 3자리코드 -> 우리말 국가명으로 변환
+                    .countryISO2( iso2Object.getString(tmpObject.getString("Country_ISO3")))
+                        // iso3306 3자리코드 -> iso3306 2자리코드로 변환
+                    .source( tmpObject.getString("Source"))
+                    .date( tmpObject.getString("Date_entry"))
+                    .build();
+            commonChartDataList.add(tmpChartData);
+        }
+
+        System.out.println(commonChartDataList.toString());
+    }
+
+
+    // 확진자가 있는 국가명 만을 뽑아오는 메서드
+    public void putCountryList(){
+        TreeSet<String> set = new TreeSet<>();
+        for(int i=0; i<commonChartDataList.size(); i++){
+            set.add(commonChartDataList.get(i).getCountry());
+        }
+        countryList = new ArrayList<>(set);
+        System.out.println(countryList);
+    }
+
+    // 오늘의 json파일(파일명 형식:yyyyMMdd.json)을 해석해서 Dto에 저장
+        // 현재 getww()가 호출시 getData()도 실행되는 구조임.
+        // :Todo 나중에 getData()는 일정시간마다->> 매 02시쯤? 실행되도록 @수정 필요
+        // 22.06.30 00:55 json파일 읽는 시점에 파일이 없을경우 서버에서 불러오도록 로직 수정됨
+    public void getData(){
+        JSONArray todayjsonArray = jsonService.readjsonArrayFile();
+        int confirmedData=0;
+        int suspectedData=0;
+        Set<String> tmpSet = new HashSet<>();   // 중복값 제거키 위한 Set 사용
+        for(int i=0; i< todayjsonArray.length(); i++){
+            JSONObject tmp = (JSONObject) todayjsonArray.get(i);
+
+            if (tmp.get("Status").equals("confirmed")){confirmedData++;}
+            else if (tmp.get("Status").equals("suspected")){suspectedData++;}
+
+            tmpSet.add((String) tmp.get("Country_ISO3"));
+        }
+        List<String> countryList = new ArrayList<String>(tmpSet);   // Set-> List 변환
+        JSONObject countryName = jsonService.readjsonObjectFile("iso3tokorean");
+        for(int i=0; i<countryList.size(); i++){
+          countryList.set(i, (String) countryName.get(countryList.get(i))); // 리스트에 담긴 국가명 한글화(json->List)
+        }
+        Collections.sort(countryList);  // 국가명 가나다순 정렬
+
+        todayWorldWideDto = new WorldwideDto(confirmedData,suspectedData,countryList,countryList.size());
+            // 메모리에 싣기
+        System.out.println("생성된 데이타 : "+todayWorldWideDto.toString());
+    }
+
+
+
+
+    // 호출시 WorldwideDto를 json배열화 해서 리턴하는 메서드
+    public JSONObject getww(){
+        // todo: 현재 사용자가 geodata를 요청했는데 메모리에 json이 적재되어 있지 않으면 불러오는 구조임.
+        // 일정 시간이 되면 자동으로 업데이트 되도록 바꾸어야 함.
+        if(todayWorldWideDto==null){
+            getData();
+        }
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        for(int i=0; i< todayWorldWideDto.getCountryCount(); i++){ // 발병국명단List -> jsonArray에 담기 위한 반복문
+            jsonObject.put(i+"",todayWorldWideDto.getCountryList().get(i));
+        }
+        jsonArray.put(jsonObject);
+
+//        jsonObject.clear();   // 쓰니까 오버플로뜸. 왜지?????
+        jsonObject = new JSONObject();
+        jsonObject.put("확진자", todayWorldWideDto.getConfirmed());
+        jsonObject.put("유증상자", todayWorldWideDto.getSuspected());
+        jsonObject.put("발병국명단", jsonArray);
+        jsonObject.put("발병국가수", todayWorldWideDto.getCountryCount());
+        putCommonChartDataList();
+        putCountryList();
+        return jsonObject;
+    }
+
+    // 국가별 총 확진자, 유증상자 데이타 집계 후 Map 형태로 리턴
+    public Map getSortedByDate(){
+        Map<String, Map<String, Map<String, List<Map>>> > 메모리 = new HashMap<>();  // 날짜 : value 를 담을 map
+
+        Map<String, Map<String, List<Map>>> 날짜 = new HashMap<>();  // 날짜 : value 를 담을 map
+        Map<String, List<Map>> 코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+
+        List<Map> 맵을담은리스트 = new ArrayList<>();
+        // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
+
+        Map<String, Integer> 확진자 = new HashMap<>();   // 확진자 를 담을 map
+        Map<String, Integer> 유증상자 = new HashMap<>();   // 유증상자 를 담을 map
+        Map<String, String> 한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+
+        for (int i=0; i<commonChartDataList.size(); i++) {
+
+            String date = commonChartDataList.get(i).getDate();
+            String iso = commonChartDataList.get(i).getCountryISO2();
+            String country = commonChartDataList.get(i).getCountry();
+            String status = commonChartDataList.get(i).getStatus();
+
+            if (i == 0) {
+                if (commonChartDataList.get(i).getStatus().equals("confirmed")) {
+                    확진자.put("확진자", 1);
+                    유증상자.put("유증상자", 0);
+                } else if (commonChartDataList.get(i).getStatus().equals("suspected")) {
+                    확진자.put("확진자", 0);
+                    유증상자.put("유증상자", 1);
+                }
+                한글국가명.put("국가명", commonChartDataList.get(i).getCountry());
+                맵을담은리스트.add(0, 한글국가명);
+                맵을담은리스트.add(1, 확진자);
+                맵을담은리스트.add(2, 유증상자);
+                코드명.put(commonChartDataList.get(i).getCountryISO2(), 맵을담은리스트);
+                날짜.put(commonChartDataList.get(i).getDate(), 코드명);
+                메모리.put("data", 날짜);
+
+            }else {
+
+                if ( commonChartDataList.get(i-1).getDate().equals(date) ) {    // 동일날짜 인지 확인
+
+                    if (메모리.get("data").get(date).containsKey(iso)){    //
+
+                        if (status.equals("confirmed")) {
+
+                            int i1 = (int) 메모리.get("data").get(date).get(iso).get(1).get("확진자");
+                            메모리.get("data").get(date).get(iso).get(1).put("확진자" , i1+1 );
+
+                        } else if (status.equals("suspected")) {
+
+                            int i1 = (int) 메모리.get("data").get(date).get(iso).get(2).get("유증상자");
+                            메모리.get("data").get(date).get(iso).get(2).put("유증상자" , i1+1 );
+
+                        }
+                        
+                    }else {
+
+                        코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+
+                        맵을담은리스트 = new ArrayList<>();
+                        // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
+
+                        확진자 = new HashMap<>();   // 확진자 를 담을 map
+                        유증상자 = new HashMap<>();   // 유증상자 를 담을 map
+                        한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+
+                        if (status.equals("confirmed")) {
+                            확진자.put("확진자", 1);
+                            유증상자.put("유증상자", 0);
+                        } else if (status.equals("suspected")) {
+                            확진자.put("확진자", 0);
+                            유증상자.put("유증상자", 1);
+                        } else {
+                            확진자.put("확진자",0);
+                            유증상자.put("유증상자",0);
+                        }
+                        한글국가명.put("국가명", country);
+                        맵을담은리스트.add(0, 한글국가명);
+                        맵을담은리스트.add(1, 확진자);
+                        맵을담은리스트.add(2, 유증상자);
+                        코드명.put(iso, 맵을담은리스트);
+                        메모리.get("data").get(date).putAll(코드명);
+
+                    }
+
+                } else { // 동일 날짜가 아니라면
+                    날짜 = new HashMap<>();  // 날짜 : value 를 담을 map
+                    코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+
+                    맵을담은리스트 = new ArrayList<>();
+                    // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
+
+                    확진자 = new HashMap<>();   // 확진자 를 담을 map
+                    유증상자 = new HashMap<>();   // 유증상자 를 담을 map
+                    한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+
+                    if (status.equals("confirmed")) {
+                        확진자.put("확진자", 1);
+                        유증상자.put("유증상자", 0);
+                    } else if (status.equals("suspected")) {
+                        확진자.put("확진자", 0);
+                        유증상자.put("유증상자", 1);
+                    } else {
+                        확진자.put("확진자",0);
+                        유증상자.put("유증상자",0);
+                    }
+
+                    한글국가명.put("국가명",country);
+                    맵을담은리스트.add(0, 한글국가명);
+                    맵을담은리스트.add(1, 확진자);
+                    맵을담은리스트.add(2, 유증상자);
+                    코드명.put(iso, 맵을담은리스트);
+                    날짜.put(date, 코드명);
+                    메모리.get("data").putAll( 날짜 );
+                    System.out.println( 메모리);
+                }
+            }
+        }
+        return 메모리;
+    }
+
+        // 만들고자 하는 형식
+        // [ { 2022-05-18 : { KR : [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] ,
+        //                  { JP : [ { 국가명 : 일본 }, { 확진자 : 30 }, { 유증상자 : 100 } ] } } ,
+        //
+        //   { 2022-05-19 : { KR : [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] ,
+        //                  { JP : [ { 국가명 : 일본 }, { 확진자 : 30 }, { 유증상자 : 100 } ] },
+        //                  { CN : [ { 국가명 : 중국 }, { 확진자 : 30 }, { 유증상자 : 100 } ] } }
+        // ]
+//
+//        Map<String, Map<String, List<Map>>> 메모리 = new HashMap<>();  // 날짜 -> 메모리 deepcopy
+//        Map<String, Map<String, List<Map>>> 메모리2 = new HashMap<>();  // 메모리 -> 메모리2 누적
+//
+//
+//        Map<String, Map<String, List<Map>>> 날짜 = new HashMap<>();  // 날짜 : value 를 담을 map
+//        Map<String, List<Map>> 코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+//
+//        List<Map> 맵을담은리스트 = new ArrayList<>();
+//        // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
+//
+//        Map<String, Integer> 확진자 = new HashMap<>();   // 확진자 를 담을 map
+//        Map<String, Integer> 유증상자 = new HashMap<>();   // 유증상자 를 담을 map
+//        Map<String, String> 한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+//
+//        for(int i=0; i<commonChartDataList.size(); i++) {
+//
+//            String date = commonChartDataList.get(i).getDate();
+//            String status = commonChartDataList.get(i).getStatus();
+//            String iso2 = commonChartDataList.get(i).getCountryISO2();
+//            String country = commonChartDataList.get(i).getCountry();
+//
+//            if(날짜.containsKey(date)){   //  { 2022-05-19 : { ~~~ 가 존재하면
+//                if(날짜.get(date).containsKey(iso2)){ //  { 2022-05-19 : { KR : [ ~~~ ]  가 존재하면
+//                    if(status.equals("confirmed")){
+//                        int tmp = (int) 날짜.get(date).get(iso2).get(1).getOrDefault("확진자",0);
+//                        날짜.get(date).get(iso2).get(1).replace("확진자",tmp++);
+//                    }else if(status.equals("suspected")){
+//                        int tmp = (int) 날짜.get(date).get(iso2).get(2).getOrDefault("유증상자",0);
+//                        날짜.get(date).get(iso2).get(1).replace("유증상자",tmp++);
+//                    }
+//
+//                }else { // 날짜는 존재하나 국가코드가 없으면   ->> 날짜 제외 신규생성
+//
+//
+//
+//                    코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+//                    맵을담은리스트 = new ArrayList<>();
+//                    // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
+//
+//                    확진자 = new HashMap<>();   // 확진자 를 담을 map
+//                    유증상자 = new HashMap<>();   // 유증상자 를 담을 map
+//                    한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+//
+//
+//                    한글국가명.put("국가명",country);
+//                    if(status.equals("confirmed")){
+//                        확진자.put("확진자",1);
+//                        유증상자.put("유증상자",0);
+//                    }else if(status.equals("suspected")){
+//                        확진자.put("확진자",0);
+//                        유증상자.put("유증상자",1);
+//                    }
+//                    맵을담은리스트.add(0,한글국가명);
+//                    맵을담은리스트.add(1,확진자);
+//                    맵을담은리스트.add(2,유증상자);
+//                    코드명.put(commonChartDataList.get(i).getCountryISO2(), 맵을담은리스트);
+//                    날짜.get(date).putAll(코드명);
+//                    메모리.putAll(날짜);
+//                    메모리 = 날짜.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+//                    System.out.println(메모리);
+//
+//
+//                    System.out.println(country);
+//                }
+//
+//
+//            }else { // 해당 "날짜"의 key값이 없으면 -> 신규 생성
+//
+//                코드명= new HashMap<>();   // isocode2 : value 를 담을 map
+//
+//                맵을담은리스트 = new ArrayList<>();
+//                // [ { 국가명 : 대한민국 }, { 확진자 : 10 }, { 유증상자 : 200 } ] 를 구현할 때 사용할 List
+//
+//                확진자 = new HashMap<>();   // 확진자 를 담을 map
+//                유증상자 = new HashMap<>();   // 유증상자 를 담을 map
+//                한글국가명 = new HashMap<>();  // 국가명 를 담을 map
+//
+//                한글국가명.put("국가명",commonChartDataList.get(i).getCountry());   // 한글국가명 담기
+//                if(status.equals("confirmed")){ // 확진자인지 유증상자인지 구분 후 담기
+//                    확진자.put("확진자",1);
+//                    유증상자.put("유증상자",0);
+//                }else if(status.equals("suspected")){
+//                    확진자.put("확진자",0);
+//                    유증상자.put("유증상자",1);
+//                }
+//
+//                맵을담은리스트.add(0,한글국가명);
+//                맵을담은리스트.add(1,확진자);
+//                맵을담은리스트.add(2,유증상자);
+//                코드명.put(commonChartDataList.get(i).getCountryISO2(), 맵을담은리스트);
+//                날짜.put(commonChartDataList.get(i).getDate(),코드명);
+////                날짜 = 코드명.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> List.c));
+////                메모리 = 날짜.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+////                메모리2.putAll(메모리);
+//                System.out.println(메모리);
+//            }
+//
+////            한글국가명 = new HashMap<>();
+////            확진자 = new HashMap<>();
+////            유증상자 = new HashMap<>();
+////            맵을담은리스트 = new ArrayList<>();
+////            코드명 = new HashMap<>();
+////            날짜 = new HashMap<>();
+//
+////            한글국가명.clear();
+////            확진자.clear();
+////            유증상자.clear();
+////            맵을담은리스트.clear();
+////            코드명.clear();
+////            날짜.clear();
+//            System.out.println(i+"번째 국가명 : "+country);
+//        }
+//
+//        System.out.println("리턴값 : "+날짜);
+//
+//
+//        return 날짜;
+//    }
+
+}
+
+
+                         // 강사님한테 질문할 코드
+//public Map getSortedByDate(){
+//
+//    // 만들고자 하는 형식
+//    // { 2022-05-18 : { KR : [ { country : 대한민국 }, { confirmed : 10 }, { suspected : 200 } ] } }
+//    Map<String, Map<String, List<Map<String, ?>>>> dateMap = new HashMap<>();  // 날짜 : value 를 담을 map
+//    Map<String, List<Map<String, ?>>>  iso2Map= new HashMap<>();   // isocode2 : value 를 담을 map
+//    Map<String, Integer> confirmedMap = new HashMap<>();   // confirmed 를 담을 map
+//    Map<String, Integer> suspectedMap = new HashMap<>();   // suspected 를 담을 map
+//    Map<String, String> countryMap = new HashMap<>();  // country 를 담을 map
+//    List<Map<String,?>> mapList = new ArrayList<>();
+//    // [ { country : 대한민국 }, { confirmed : 10 }, { suspected : 200 } ] 를 구현할 때 사용할 List
+//
+//
+//    for(int i=0; i<commonChartDataList.size(); i++) {
+//        String tmpDate = commonChartDataList.get(i).getDate();
+//        String tmpStatus = commonChartDataList.get(i).getStatus();
+//        String tmpISO2 = commonChartDataList.get(i).getCountryISO2();
+//        String tmpCountry = commonChartDataList.get(i).getCountry();
+//
+//        if (dateMap.containsKey(tmpDate)) {  // 최상위 Map에 해당 날짜 명칭의 Key가 있으면
+//            if (dateMap.get(tmpDate).containsKey(tmpISO2)) {  // 해당 날짜에 해당 국가 Key가 있으면
+//                if (tmpStatus.equals("confirmed")) {  // 확진자이면
+//                    Integer tmp = (int)dateMap.get(tmpDate).get(tmpISO2).get(1).get("확진자");  // 기존값 불러오기
+//
+//                    dateMap.get(tmpDate).get(tmpISO2).get(1).replace("확진자",2);            // <---- 현 위치 어떻게 해야 하난가요??
+//
+//                } else if (tmpStatus.equals("suspected")) {   // 유증상자이면
+//                    int tmp = suspectedMap.get("유증상자"); // 기존값 불러오기
+//                    suspectedMap.replace("유증상자", tmp++); // 유증상자 ++
+//                    mapList.set(2, suspectedMap);        // List에 반영
+//                }
+//
+//            } else { // 해당 날짜에 해당 국가 key가 없으면 -> 날짜 제외 신규 생성
+//                confirmedMap.put("확진자", 0);
+//                suspectedMap.put("유증상자", 0);
+//                if (tmpStatus.equals("confirmed")) confirmedMap.put("확진자", 1);
+//                else if (tmpStatus.equals("suspected")) suspectedMap.put("유증상자", 1);
+//                countryMap.put("country", tmpCountry);
+//                mapList.add(countryMap);
+//                mapList.add(confirmedMap);
+//                mapList.add(suspectedMap);
+//                iso2Map.put(tmpISO2, mapList);
+//                dateMap.get(tmpDate).put(tmpISO2, mapList);
+//            }
+//
+//        } else { // 최상위 Map에 해당 날짜 명칭의 Key가 없으면 -> 신규 생성
+//            confirmedMap.put("확진자", 0);
+//            suspectedMap.put("유증상자", 0);
+//            if (tmpStatus.equals("confirmed")) confirmedMap.put("확진자", 1);
+//            else if (tmpStatus.equals("suspected")) suspectedMap.put("유증상자", 1);
+//            countryMap.put("country", tmpCountry);
+//            mapList.add(countryMap);
+//            mapList.add(confirmedMap);
+//            mapList.add(suspectedMap);
+//            iso2Map.put(tmpISO2, mapList);
+//            dateMap.put(tmpDate, iso2Map);
+//        }
+//    }
+//
+//    return dateMap;
+//}

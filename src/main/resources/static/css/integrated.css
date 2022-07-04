@@ -1,0 +1,24 @@
+.linear-h1{
+    /*position: fixed;*/
+    top: 5%;
+    left: 5%;
+    font-weight: bold;
+    font-size: 40px;
+    letter-spacing: -2px;
+    background: linear-gradient(to right, #ff5f5c, #2eadfd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.colorful-span-2{
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(to right, #ff5f5c, #2eadfd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#entity-container{
+    height: 50vh;
+    overflow-scrolling: auto;
+}
