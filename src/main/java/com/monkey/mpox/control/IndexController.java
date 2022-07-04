@@ -13,10 +13,10 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String notmain(){
+    public String chart(){
 //        System.setProperty("file.encoding","UTF-8");
 //        System.out.println(Charset.defaultCharset());
-        return "notmain";
+        return "chart";
     }
 
     @GetMapping("/view")
