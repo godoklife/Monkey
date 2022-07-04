@@ -23,6 +23,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'           // 롬복 라이브러리 [ 작성 라이브러리 ]
     implementation group: 'org.json', name: 'json', version: '20220320' // JSON 라이브러리
 
+    runtimeOnly 'com.h2database:h2' // H2 라이브러리 [관계형 데이터베이스 = 인메모리]
 }
 
 tasks.named('test') {
