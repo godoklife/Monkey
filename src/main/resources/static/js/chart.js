@@ -8,10 +8,7 @@ let totalsuspected; // 총 유증상자
 loadData(); // <--- 동기식 으로 설정되어있음
 getTable();
 getGeoChartData();
-google.load('visualization', '1', {'packages': ['geochart'],
 
-});
-google.setOnLoadCallback(drawVisualization);
 
 
 // 페이지 로드시 차트 실행에 필요한 json 파일처리& 메모리 적재
@@ -23,8 +20,6 @@ function loadData(){
         success:function (args) {
             if(args===false){
                 alert('예외발생. 콘솔 읽어보셈');
-            }else{
-                alert("동기식 데이타 로드 완료.\n확인누를때까지 진행 안함.");
             }
         }
     });
@@ -65,6 +60,9 @@ function getGeoChartData(){
             geochartArray = jsonArray;
             console.log(geochartArray);
 
+            // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로
+            google.load('visualization', '1', {'packages': ['geochart']});
+            google.setOnLoadCallback(drawVisualization);
 
 
         },
@@ -98,19 +96,11 @@ function drawVisualization(chartData) {
     }
 
 
-
-    // data.addRows([[{v:'US',f:'미국'},100,'확진자 : 100\n유증상자 : 20'], [{v:'CN',f:'중국'},200,'확진자 : 200']]);
-    // ivalue['US'] = 'http://www.google.com';
-
-    // data.addRows([[{v:'CN',f:'중국'},200,'확진자 : 200']]);
-    // ivalue['CN'] = '';
-
-
-
     var options = {
         colorAxis: {
             colors:['#fcb6b6','#750000']
-        }
+        },
+        defaultColor:'#c0ffab'
 
     };
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
@@ -124,6 +114,7 @@ function drawVisualization(chartData) {
         }
     });
     chart.draw(data, options);
+
 }
 
 
