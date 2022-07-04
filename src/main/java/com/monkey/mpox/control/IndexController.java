@@ -9,18 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class IndexController {
 
-    @Autowired HttpServletResponse response;
+    @Autowired
+    HttpServletResponse response;
 
 
     @GetMapping("/")
-    public String chart(){
+    public String chart() {
 //        System.setProperty("file.encoding","UTF-8");
 //        System.out.println(Charset.defaultCharset());
         return "chart";
-    }
-
-    @GetMapping("/view")
-    public String wwstatistics(){
-        return "view";
     }
 }

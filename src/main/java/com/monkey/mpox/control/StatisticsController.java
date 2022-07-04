@@ -21,15 +21,6 @@ public class StatisticsController {
         return statisticsService.loadData();
     }
 
-    @GetMapping("/readjsonfile")
-    public void readjsonfile(){
-        try {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json");
-            response.getWriter().println(statisticsService.readjsonArrayFile());
-        }catch (Exception e){System.out.println(e);}
-    }
-
     // 구글 지오맵에 써먹을 json(map) 호출
     @GetMapping("/viewgeo")
     public void viewgeo(){
@@ -44,5 +35,4 @@ public class StatisticsController {
     public Map getdatadate(){
         return statisticsService.getSortedByDate();
     }
-
 }
