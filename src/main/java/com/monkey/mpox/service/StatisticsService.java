@@ -1,6 +1,5 @@
 package com.monkey.mpox.service;
 
-import com.google.gson.Gson;
 import com.monkey.mpox.dto.statistics.CommonChartData;
 import com.monkey.mpox.dto.statistics.GeoChartData;
 import com.monkey.mpox.dto.statistics.WorldwideDto;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -409,6 +407,7 @@ public class StatisticsService {
         for (int i=0; i<isoList.size(); i++){
             JSONObject object = new JSONObject();
             object.put("확진자",0);
+            object.put("유증상자",0);
             object.put("국가명","");
             object.put("ISO",isoList.get(i));
             jsonArray.put(object);
@@ -420,18 +419,24 @@ public class StatisticsService {
             String country = commonChartDataList.get(i).getCountry();
             String status = commonChartDataList.get(i).getStatus();
             for(int j=0; j< jsonArray.length(); j++) {
-                if (jsonArray.getJSONObject(j).get("ISO").equals(iso) && status.equals("confirmed")) {    // 동일한 iso코드가 담긴 오브젝트를 찾아서
-                    int tmp = jsonArray.getJSONObject(j).getInt("확진자");
-                    jsonArray.getJSONObject(j).put("확진자",tmp+1);
+                if (jsonArray.getJSONObject(j).get("ISO").equals(iso)) {    // 동일한 iso코드가 담긴 오브젝트를 찾아서
+                    if(status.equals("confirmed")){ // 집어넣어야 할 데이타가 확진자인지 유증상자인지 구분 후
+                        int tmp = jsonArray.getJSONObject(j).getInt("확진자");
+                        jsonArray.getJSONObject(j).put("확진자",tmp+1);    // 카운트업
+                    }else if(status.equals("suspected")){
+                        int tmp = jsonArray.getJSONObject(j).getInt("유증상자");
+                        jsonArray.getJSONObject(j).put("유증상자",tmp+1);
+                    }
                     jsonArray.getJSONObject(j).put("국가명",country);
                     totalConfirmed++;
                 }
             }
         }
 
-        // 비감염자나 유증상자만 있는 국가 제거
+        // 비감염자(status.equals("discarded")) 또는 에러코드만(omit_error) 있는 국가 제거
         for(int i= jsonArray.length()-1;i>=0; i--){
-            if(jsonArray.getJSONObject(i).getInt("확진자")==0){
+            if(jsonArray.getJSONObject(i).getInt("확진자")==0 &&
+                    jsonArray.getJSONObject(i).getInt("유증상자")==0){
                 jsonArray.remove(i);
             }
         }
@@ -439,7 +444,6 @@ public class StatisticsService {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("확진자총합",totalConfirmed);
         jsonArray.put(jsonObject);
-        System.out.println(jsonArray);
 
         return jsonArray;
     }

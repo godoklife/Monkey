@@ -1,14 +1,21 @@
 let geochartArray;
 let date;   // 날짜 배열
 let country;    // 국가명(한글) 배열
-let totalconfirmed; // 총 확진자
+let totalconfirmed; // 총 확진자, drawVisualization()에서 데이타 뽑아내는 김에 해당 변수 초기화 시킴.
 let totalsuspected; // 총 유증상자
 
 
 loadData(); // <--- 동기식 으로 설정되어있음
 getTable();
-getGeoChartData();
+getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 
+function runFunctions(){
+// 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로임;;
+    google.load('visualization', '1', {'packages': ['geochart']});
+    google.setOnLoadCallback(drawVisualization);
+    showTable();
+
+}
 
 
 // 페이지 로드시 차트 실행에 필요한 json 파일처리& 메모리 적재
@@ -52,6 +59,27 @@ function getTable(){
     });
 }
 
+function showTable(){
+    let tablecode = '<tr>\n' +
+        '                        <th> </th>\n' +
+        '                        <th>국가</th>\n' +
+        '                        <th>확진자</th>\n' +
+        '                        <th>유증상자</th>\n' +
+        '                        <th>비율(%)</th>\n' +
+        '                    </tr>';
+    for(let i=0; i<geochartArray.length; i++){
+        tablecode+='<tr>\n' +
+            '                        <td>'+(i+1)+'</td>\n' +
+            '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
+            '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
+            '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
+            '                        <td>모름%</td>\n' +
+            '                    </tr>';
+    }
+    $('#totaltable').html(tablecode);
+}
+
+
 function getGeoChartData(){
     $.ajax({
         url:'/statistics/getgeochartdata',
@@ -59,10 +87,7 @@ function getGeoChartData(){
         success:function (jsonArray){
             geochartArray = jsonArray;
             console.log(geochartArray);
-
-            // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로
-            google.load('visualization', '1', {'packages': ['geochart']});
-            google.setOnLoadCallback(drawVisualization);
+            runFunctions();
 
 
         },
@@ -73,12 +98,8 @@ function getGeoChartData(){
     });
 }
 
-
-
-
-
 // Google GeoChart 정의
-function drawVisualization(chartData) {
+function drawVisualization() {
 
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Country');
@@ -91,14 +112,18 @@ function drawVisualization(chartData) {
 
     for(let i=0; i<geochartArray.length; i++){
         data.addRows([[{v:geochartArray[i]['ISO'],f:geochartArray[i]['국가명']},
-            geochartArray[i]['확진자'],'확진자 : '+geochartArray[i]['확진자']+'\n유증상자 : 0']]);
+            geochartArray[i]['확진자'],'확진자 : '+geochartArray[i]['확진자']+'\n' +
+            '유증상자 : '+geochartArray[i]['유증상자']+'']]);
         ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
+        if(i===geochartArray.length-1){
+            totalconfirmed = geochartArray[i]['확진자총합'];
+        }
     }
 
 
     var options = {
         colorAxis: {
-            colors:['#fcb6b6','#750000']
+            colors:['#ffe1e1','#750000']
         },
         defaultColor:'#c0ffab'
 
