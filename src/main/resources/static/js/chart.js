@@ -25,7 +25,7 @@ function loadData(){
         method:'get',
         async:false,
         success:function (args) {
-            if(args===false){
+            if(args==false){
                 alert('예외발생. 콘솔 읽어보셈');
             }
         }

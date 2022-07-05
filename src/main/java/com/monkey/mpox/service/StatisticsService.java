@@ -58,7 +58,7 @@ public class StatisticsService {
 
 
 
-        String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
+        String dir = "C:\\Users\\gks01\\git\\Monkey\\src\\main\\resources\\static\\json\\";
 //        String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
         try {
             File file = new File(dir,nowDate+".json");
@@ -80,7 +80,7 @@ public class StatisticsService {
     // 2. JSONArray 형태로 변환 후 리턴
     public JSONArray readjsonArrayFile(){
         byte failCount=0;
-        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json";
+        String dir = "C:\\Users\\gks01\\git\\Monkey\\src\\main\\resources\\static\\json\\";
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         String nowDate = dtf.format(LocalDate.now());
@@ -118,7 +118,7 @@ public class StatisticsService {
     }
     public JSONArray readjsonArrayFile(String jsonFileName){
 
-        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
+        String dir = "C:\\Users\\gks01\\git\\Monkey\\src\\main\\resources\\static\\json\\";
 
 
         File file = new File(dir+jsonFileName+".json");
@@ -140,7 +140,7 @@ public class StatisticsService {
     public JSONObject readjsonObjectFile(String jsonFileName){
 
         // todo: 배포시 경로 변경 요
-        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
+        String dir = "C:\\Users\\gks01\\git\\Monkey\\src\\main\\resources\\static\\json\\";
 
         File file = new File(dir+jsonFileName+".json");
         byte[] bytes = new byte[0];
@@ -317,7 +317,7 @@ public class StatisticsService {
                             메모리.get("data").get(date).get(iso).get(2).put("유증상자" , i1+1 );
                             totalsuspected++;
                         }
-                        
+
                     }else {
                         코드명 = new HashMap<>();   // isocode2 : value 를 담을 map
 
