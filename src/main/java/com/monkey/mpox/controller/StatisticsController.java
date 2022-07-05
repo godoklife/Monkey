@@ -1,4 +1,4 @@
-package com.monkey.mpox.control;
+package com.monkey.mpox.controller;
 
 import com.monkey.mpox.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
