@@ -9,18 +9,22 @@
 </head>
 <body>
 <br><br><br><br><br>
+
+<div id="sidebar" class=" text-center">
+    <h3>관련 정보</h3>
+    <div id="list-example" class="list-group">
+        <button class="list-group-item list-group-item-action" onclick="info()">관련 정보</button>
+        <button class="list-group-item list-group-item-action" onclick="main_symptoms()">주요 증상</button>
+        <button class="list-group-item list-group-item-action" onclick="cure()">치료법</button>
+        <button class="list-group-item list-group-item-action" onclick="preventive()">예방법</button>
+    </div>
+
+</div>
+
+
 <div class="container">
     <div class="row">
-        <div class="col-md-2 text-center">
-            <h3>관련 정보</h3>
-            <div id="list-example" class="list-group">
-                <button class="list-group-item list-group-item-action" onclick="info()">관련 정보</button>
-                <button class="list-group-item list-group-item-action" onclick="main_symptoms()">주요 증상</button>
-                <button class="list-group-item list-group-item-action" onclick="cure()">치료법</button>
-                <button class="list-group-item list-group-item-action" onclick="preventive()">예방법</button>
-            </div>
 
-        </div>
         <div class="col-md-9 offset-1">
             <div id="contentbox"></div>
             <a href="https://kdca.go.kr/contents.es?mid=a20108010000">출처 : 질병관리청 </a>
