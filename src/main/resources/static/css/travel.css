@@ -1,0 +1,15 @@
+.title{
+    border-bottom: 1px solid #c8c8c8;
+    background-color: #F7F7F7;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+}
+li{
+    list-style: none;
+    font-size: 12px;
+    padding-left: 30px;
+}
+
+
