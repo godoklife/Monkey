@@ -30,6 +30,4 @@ public class IndexController {
         return "news";
     }
 
-
-//asdfg
 }
