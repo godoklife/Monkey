@@ -67,7 +67,7 @@ function showTable(){
         '                        <th>유증상자</th>\n' +
         '                        <th>비율(%)</th>\n' +
         '                    </tr>';
-    for(let i=0; i<geochartArray.length; i++){
+    for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
         tablecode+='<tr>\n' +
             '                        <td>'+(i+1)+'</td>\n' +
             '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
