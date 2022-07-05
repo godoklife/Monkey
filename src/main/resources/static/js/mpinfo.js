@@ -162,3 +162,4 @@ function img(){
                '<td><img src="/img/5_ml.jpg"></td>';
     $("#table_img").html(html);
 }
+
