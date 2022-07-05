@@ -55,7 +55,11 @@ public class StatisticsService {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         String nowDate = dtf.format(LocalDate.now());
         // todo: 배포할 때 경로 수정 요
+
+
+
         String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
+//        String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
         try {
             File file = new File(dir,nowDate+".json");
             FileOutputStream fos =new FileOutputStream(file);
