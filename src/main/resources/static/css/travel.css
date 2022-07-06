@@ -6,10 +6,15 @@
     padding: 8px;
     text-align: center;
 }
-li{
+
+#reserve li,
+#suasion li,
+#prohibition li{
     list-style: none;
     padding-left: 30px;
     font-size: 15px;
 }
+
+
 .spandiv{font-size: 15px;}
 
