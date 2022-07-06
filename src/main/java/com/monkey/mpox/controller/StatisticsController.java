@@ -47,4 +47,16 @@ public class StatisticsController {
             response.getWriter().println(statisticsService.getSortedByCountry());
         }catch (Exception e){System.out.println(e);}
     }
+
+    //전체데이터가져오기
+    @GetMapping("/getalldata")
+    public void getalldata(){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().println(statisticsService.getSortedByDate());
+        }catch (Exception e){
+            System.out.println("전체데이터가져오기에러" + e);
+        }
+    }
 }

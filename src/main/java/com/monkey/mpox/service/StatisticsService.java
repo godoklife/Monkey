@@ -453,5 +453,23 @@ public class StatisticsService {
         return jsonArray;
     }
 
+    // 확인날짜별 확진자 유증상자 jsonArrlist
+/*    public JSONArray getstautdata() {
+        try {
+            JSONArray todayjsonArray = readjsonArrayFile();
+            JSONArray array = new JSONArray(); // json 가공값
+            for(int i = 0 ; i < todayjsonArray.length(); i ++){
+                JSONObject jsonObject = todayjsonArray.getJSONObject(i); // i번째 jsonobject 추출
+                JSONObject object = new JSONObject();
+                // 중복키가 있을경우
+                array.get
+
+            }
+
+        }catch (Exception e){
+            System.out.println("서비스 getstautdata에러: " e);
+        }
+    }*/
+
 }
 
