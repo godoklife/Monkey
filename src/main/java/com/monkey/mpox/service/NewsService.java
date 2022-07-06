@@ -30,9 +30,10 @@ public class NewsService {
 
         for (Element element : file) {
 
-            String site = element.select(".news_tit").attr("href");
-            String tt = element.select(".news_tit").attr("title");
-            String txt = element.select(".dsc_txt_wrap").text();
+            String site = element.select(".news_tit").attr("href"); // 링크
+            String tt = element.select(".news_tit").attr("title"); // 제목
+            String txt = element.select(".dsc_txt_wrap").text(); // 내용
+            String img =element.select(".api_get").attr("src"); // 이미지 링크
 
             if(site == "" || tt == "" || txt == ""){
 
@@ -41,6 +42,7 @@ public class NewsService {
                 newsobject.put("link", site);
                 newsobject.put("title", tt);
                 newsobject.put("txt", txt);
+                newsobject.put("img", img);
                 newsarray.put(newsobject);
             }
 

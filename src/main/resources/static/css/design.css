@@ -1,0 +1,45 @@
+.design_title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #010B40;
+    align: center;
+}
+
+body{
+    background-color: #e8e8e8;
+}
+
+.container{
+    background-color: #FFFFFF;
+}
+
+#newspage, #infopage, #travelinfo{
+    margin-top: 100px;
+}
+.title_text{
+    font-size: 26px;
+    font-weight: bold;
+    align-content: center;
+}
+.entityPickerDiv{
+    margin-top: 30px;
+}
+
+.newsbox td{
+    padding: 10px;
+}
+
+.footer{
+    color: black;
+    text-align: center;
+
+}
+.textsmall{
+    font-size:15px;
+}
+.footer_text , a{
+     font-size: 25px;
+}
+footer_body{
+    background-color: #010326;
+}
