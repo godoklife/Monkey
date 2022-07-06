@@ -5,6 +5,7 @@ import com.monkey.mpox.dto.statistics.GeoChartData;
 import com.monkey.mpox.dto.statistics.WorldwideDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -24,14 +25,15 @@ public class StatisticsService {
     List<GeoChartData> geoChartDataList = new ArrayList<>();         //putGeoChartDataList()에서 데이터 삽입
     List<String>countryList = new ArrayList<>();                    //putCommonChartDataList()에서 데이터 삽입
 
-
+    @Value("${application.jsonPath}")
+    String dir;
 
 
     public boolean loadData(){
 
-//        boolean flag1 = getjsonFromServer();
+        boolean flag1 = getjsonFromServer();
             // @@@@@@@@@@@ 나중에 다시 열어놓을것, 반복적으로 다운로드하면 혼날까봐 잠깐 막음 @@@@@@@@@@@
-        boolean flag1 = true;
+//        boolean flag1 = true;
         boolean flag2 = putCommonChartDataList();
 
         if(flag1 && flag2)
@@ -58,9 +60,7 @@ public class StatisticsService {
 
 
 
-        String dir = "D:\\spring\\Monkey\\src\\main\\resources\\static\\json\\";
 //        String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
-
         try {
             File file = new File(dir,nowDate+".json");
             FileOutputStream fos =new FileOutputStream(file);
@@ -81,7 +81,7 @@ public class StatisticsService {
     // 2. JSONArray 형태로 변환 후 리턴
     public JSONArray readjsonArrayFile(){
         byte failCount=0;
-        String dir = "D:\\spring\\Monkey\\src\\main\\resources\\static\\json\\";
+//        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json";
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         String nowDate = dtf.format(LocalDate.now());
@@ -119,10 +119,10 @@ public class StatisticsService {
     }
     public JSONArray readjsonArrayFile(String jsonFileName){
 
-        String dir = "D:\\spring\\Monkey\\src\\main\\resources\\static\\json\\";
+//        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
 
 
-        File file = new File(dir+jsonFileName+".json");
+        File file = new File(dir+"/"+jsonFileName+".json");
         byte[] bytes = new byte[0];
         try {
             FileInputStream fis = new FileInputStream(file);
@@ -141,9 +141,9 @@ public class StatisticsService {
     public JSONObject readjsonObjectFile(String jsonFileName){
 
         // todo: 배포시 경로 변경 요
-        String dir = "D:\\spring\\Monkey\\src\\main\\resources\\static\\json\\";
+//        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
 
-        File file = new File(dir+jsonFileName+".json");
+        File file = new File(dir+"/"+jsonFileName+".json");
         byte[] bytes = new byte[0];
         try {
             FileInputStream fis = new FileInputStream(file);

@@ -131,5 +131,12 @@ img{
     font-weight: bold;
 }
 
-
+#floatMenu {
+    position: absolute;
+    width: 138px;
+    height: 200px;
+    left: 50px;
+    top: 250px;
+    color: #fff;
+}
 
