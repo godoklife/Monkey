@@ -5,7 +5,6 @@ function getnews() {
     $.ajax({
         url: '/getnews',
         success : function(news){
-            console.log(news);
             for(let i=0 ; i< news.length ; i++){
                 html +=
                     '<tr class="newsbox">'+

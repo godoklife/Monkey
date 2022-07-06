@@ -8,7 +8,6 @@ function gettravel(){
         method:"GET",
         async:false,
         success : function (re){
-            console.log(re);
             division(re);
         }
     });
@@ -29,7 +28,6 @@ function division(re){
                 }
             }
         inserthtml(j);
-        console.log(continent);
     }
 }
 
@@ -90,7 +88,6 @@ function inserthtml(lv){
 
 // 네비게이션 이동
 function pagemove( idkey ){
-    console.log(idkey);
     let offset = $('#'+idkey+'').offset();
     $("html, body").animate({scrollTop: offset.top - 40},400);
 }

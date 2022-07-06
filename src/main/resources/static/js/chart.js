@@ -4,11 +4,9 @@ let country;    // 국가명(한글) 배열
 let totalconfirmed; // 총 확진자, drawVisualization()에서 데이타 뽑아내는 김에 해당 변수 초기화 시킴.
 let totalsuspected; // 총 유증상자
 
-
 loadData(); // <--- 동기식 으로 설정되어있음
 getTable();
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
-
 function runFunctions(){
 // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로임;;
     google.load('visualization', '1', {'packages': ['geochart']});
@@ -144,7 +142,16 @@ function drawVisualization() {
 
 
 
-
+/*//전체 JSOND 확인 함수
+function getalldata(){
+    $.ajax({
+        url: "/statistics/getalldata",
+        success : function (re){
+            console.log("전체데이터");
+            console.log(re);
+        }
+    })
+}*/
 
 
 // 리턴받는 형식 :
@@ -157,29 +164,29 @@ function drawVisualization() {
 // ]
 
 // 개고생해서 만들었는데 생각해보니 아직 써먹을곳이 없음. 지우지말고 일단 냅두기
+/* function getdataDate(){
+     $.ajax({
+         url:'/statistics/getdatadate',
+         success:function (jsonarray){
+             geochartArray = jsonarray;
 
-// function getdataDate(){
-//     $.ajax({
-//         url:'/statistics/getdatadate',
-//         success:function (jsonarray){
-//             geochartArray = jsonarray;
-//             console.log(geochartArray);
-//             let dataKeys = Object.keys(geochartArray['data']);
-//             console.log(dataKeys)
-//
-//             for(let i=0; i< dataKeys.length; i++){
-//                 let datakey = dataKeys[i]
-//                 console.log(datakey+' : '+geochartArray['data'][datakey])
-//                 let countrykeys = Object.keys(geochartArray['data'][datakey])
-//
-//                 for (let j=0; j<countrykeys.length; j++){
-//                     let countrykey = countrykeys[j];
-//                     console.log(countrykey+' : '+geochartArray['data'][datakey][countrykey]);
-//                 }
-//
-//             }
-//
-//         }
-//     });
-// }
+
+            /!* let dataKeys = Object.keys(geochartArray['data']);
+             for(let i=0; i< dataKeys.length; i++){
+                 let datakey = dataKeys[i]
+                    /!* console.log(datakey+' : '+geochartArray['data'][datakey])*!/
+                 let countrykeys = Object.keys(geochartArray['data'][datakey]);
+                 for (let j=0; j<countrykeys.length; j++){
+                     let countrykey = countrykeys[j];
+                     /!*console.log(countrykey+' : '+geochartArray['data'][datakey][countrykey]);*!/
+                 }
+             }
+            console.log(dataKeys);*!/
+
+         }
+     });
+ }*/
+
+
+ //선그래프
 
