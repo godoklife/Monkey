@@ -29,5 +29,7 @@ public class IndexController {
     public String news(){
         return "news";
     }
+    @GetMapping("/footer")
+    public String footer(){return "footer";}
 
 }
