@@ -9,10 +9,12 @@ let size = 10; // 한 페이지에 표시할 국가수
 let startbtn=1;   // 페이징 버튼의 시작 번호
 let endbtn=10;     // 페이징 버튼의 끝 번호
 let keyword=[];
+let sortingKey = "확진자"  // <-- value로 검색 후에도 정렬하기 위해 전역변수화, 페이지 실행 초기값 : 확진자 많은순 정렬
+
 
 
 loadData(); // <--- 동기식 으로 설정되어있음
-getTable();
+
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 
 function runFunctions(){
@@ -20,6 +22,7 @@ function runFunctions(){
     google.load('visualization', '1', {'packages': ['geochart']});
     google.setOnLoadCallback(drawVisualization);
     showTable(page);    // <-- 지오차트 바로 하단 테이블 출력
+    getTable();
 
 }
 
@@ -38,36 +41,50 @@ function loadData(){
     });
 }
 
+// function getTable(){
+//     $.ajax({
+//         url:'/statistics/viewgeo',
+//         data:{},
+//         method:'GET',
+//         success:function (jsonObject){
+//             console.log(jsonObject);
+//             let entity='';
+//             for(let i=0; i<jsonObject['발병국가수'];i++){
+//                 let countryName = jsonObject['발병국명단'][0][i];
+//                 if(countryName.includes(' ')){
+//                     countryName = jsonObject['발병국명단'][0][i].replace(' ', '&nbsp;');
+//                 }
+//                 entity+='<div>' +
+//                     '<input type="checkbox" id="chk'+jsonObject["발병국명단"][0][i]+'" ' +
+//                     'onclick=chkcheckbox("'+jsonObject["발병국명단"][0][i]+'")>' +
+//                     '<span> '+jsonObject["발병국명단"][0][i]+' </span>' +
+//                     '</div>';
+//             }
+//             $("#entity-container").html(entity);
+//         },
+//         error:function (err){
+//             console.log(err);
+//             alert("잠시후 다시 시도해주세요 : 코드 똑바로 짜시오.")
+//         }
+//     });
+// }
+
 function getTable(){
-    $.ajax({
-        url:'/statistics/viewgeo',
-        data:{},
-        method:'GET',
-        success:function (jsonObject){
-            console.log(jsonObject);
 
-
-            let entity='';
-
-
-            for(let i=0; i<jsonObject['발병국가수'];i++){
-                let countryName = jsonObject['발병국명단'][0][i];
-                if(countryName.includes(' ')){
-                    countryName = jsonObject['발병국명단'][0][i].replace(' ', '&nbsp;');
-                }
-                entity+='<div>' +
-                    '<input type="checkbox" id="chk'+jsonObject["발병국명단"][0][i]+'" ' +
-                    'onclick=chkcheckbox("'+jsonObject["발병국명단"][0][i]+'")>' +
-                    '<span> '+jsonObject["발병국명단"][0][i]+' </span>' +
-                    '</div>';
-            }
-            $("#entity-container").html(entity);
-        },
-        error:function (err){
-            console.log(err);
-            alert("잠시후 다시 시도해주세요 : 코드 똑바로 짜시오.")
+    let entity='';
+    for(let i=0; i<geochartArray.length-1;i++){
+        let countryName = geochartArray[i]['국가명'];
+        if(countryName.includes(' ')){
+            countryName = geochartArray[i]['국가명'].replace(' ', '&nbsp;');
         }
-    });
+        entity+='<div>' +
+            '<input type="checkbox" id="chk'+countryName+'" ' +
+            'onclick=chkcheckbox("'+countryName+'")>' +
+            '<label for="chk'+countryName+'"> '+countryName+' </label>' +
+            '</div>';
+    }
+    $("#entity-container").html(entity);
+
 }
 
 function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국가를 배열에 담거나 제거
@@ -82,64 +99,26 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
             }
         }
     }
-    console.log(keyword)
-    showTable(sortingKey, keyword);
-}
-
-// 정렬
-let sortingKey = "확진자"  // <-- value로 검색 후에도 정렬하기 위해 전역변수화, 페이지 실행 초기값 : 확진자 많은순 정렬
-function showTableㅁㄴㅇㅁㄴㅇ(sortingKey, keyword){
-
-    // 페이지 기본값 : 확진자 많은 순으로 정렬
-    geochartArray.sort(function (a, b){
-        return b['확진자'] - a['확진자'];
-    });
-    let tablecode = '<tr>\n' +
-        '                        <th> </th>\n' +
-        '                        <th>국가</th>\n' +
-        '                        <th>확진자</th>\n' +
-        '                        <th>유증상자</th>\n' +
-        '                        <th>확진자비율(%)</th>\n' +
-        '                    </tr>';
-
-    if (keyword===undefined || keyword.length===0){ // 검색값 없이 팡션이 호출되었을때  <-- 페이지 첫 로드시
-        for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
-
-            tablecode+='<tr>\n' +
-                '                        <td>'+(i+1)+'</td>\n' +
-                '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
-                '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
-                '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
-                '                        <td>모름%</td>\n' +
-                '                    </tr>';
-        }
-        $('#totaltable').html(tablecode);
+    page=1;
+    if (keyword.length===0){
+        totalpage = Math.ceil((geochartArray.length/size));
     }else{
-        // 사용자가 지정한 기준값( keyword = 국가명이 담긴 배열의 형태 )에 따라 국가를 테이블에 출력
-        let tmpindex=1;
-        for(let i=0; i<geochartArray.length-1; i++){
-            if(keyword.includes(geochartArray[i]['국가명'])){
-                tablecode+='<tr>\n' +
-                    '                        <td>'+tmpindex+'</td>\n' +
-                    '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
-                    '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
-                    '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
-                    '                        <td>모름%</td>\n' +
-                    '                    </tr>';
-                tmpindex++;
-            }
-        }
-        $('#totaltable').html(tablecode);
+        totalpage = Math.ceil((keyword.length/size));
     }
 
 
-
-
-
-
+    console.log(keyword)
+    showTable(page);
 }
 
+// 정렬
+
 function showTable(index){  // 페이징처리
+
+    // 페이지 기본값 : 확진자 많은 순으로 정렬
+    geochartArray.sort(function (a, b){
+        return b[sortingKey] - a[sortingKey];
+    });
     page = index;
     startbtn = Math.ceil(page/10);
     if(startbtn>1){
@@ -147,7 +126,7 @@ function showTable(index){  // 페이징처리
     }
     endbtn = startbtn+10-1;
     if(endbtn>totalpage) endbtn = totalpage;
-    if(endbtn==0) endbtn = 1;
+    if(endbtn===0) endbtn = 1;
 
     let tablecode = '<tr>\n' +
         '                        <th> </th>\n' +
@@ -156,18 +135,38 @@ function showTable(index){  // 페이징처리
         '                        <th>유증상자</th>\n' +
         '                        <th>비율(%)</th>\n' +
         '                    </tr>';
-    for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
-        if( i>=((index-1)*size) && i<(index*size) ){
-            tablecode+='<tr>\n' +
-                '                        <td>'+(i+1)+'</td>\n' +
-                '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
-                '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
-                '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
-                '                        <td>모름%</td>\n' +
-                '                    </tr>';
+    if(keyword===undefined || keyword.length===0){
+        for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
+            if( i>=((index-1)*size) && i<(index*size) ){
+                tablecode+='<tr>\n' +
+                    '                        <td>'+(i+1)+'</td>\n' +
+                    '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
+                    '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
+                    '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
+                    '                        <td>모름%</td>\n' +
+                    '                    </tr>';
+            }
+            if(i==(index*size)){
+                break;
+            }
         }
-        if(i==(index*size)){
-            break;
+    }else{
+        // 사용자가 지정한 기준값( keyword = 국가명이 담긴 배열의 형태 )에 따라 국가를 테이블에 출력
+        let tmpindex=1;
+        for(let i=0; i<geochartArray.length-1; i++){
+            if( i>=((index-1)*size) && i<(index*size) ) {
+                if (keyword.includes(geochartArray[i]['국가명'])) {
+                    tablecode += '<tr>\n' +
+                        '                        <td>' + tmpindex + '</td>\n' +
+                        '                        <td>' + geochartArray[i]['국가명'] + '</td>\n' +
+                        '                        <td>' + geochartArray[i]['확진자'] + '</td>\n' +
+                        '                        <td>' + geochartArray[i]['유증상자'] + '</td>\n' +
+                        '                        <td>모름%</td>\n' +
+                        '                    </tr>';
+                    tmpindex++;
+                }
+            }
+
         }
 
     }

@@ -21,6 +21,8 @@ public class StatisticsController {
         return statisticsService.loadData();
     }
 
+
+    // todo: 여기 뭐하는 부분인지 체크 필요함 2022.07.06 15:53
     // 구글 지오맵에 써먹을 json(map) 호출
     @GetMapping("/viewgeo")
     public void viewgeo(){
