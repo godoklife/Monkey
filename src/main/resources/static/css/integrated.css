@@ -18,6 +18,34 @@
     -webkit-text-fill-color: transparent;
 }
 
+#totalconfirmed_div{
+    position: relative;
+    top:-480px;
+    left:660px;
+    z-index: 2;
+}
+
+#totalconfirmed_div span{
+    font-size: 16px;
+}
+
+#totaltable{
+    width: 900px;
+}
+
+#regions_div{
+    width: 900px;
+    height: 500px;
+    z-index: 1;
+}
+
+/*.entityPickerDiv{ 작동안함 */
+/*    max-height:900px;*/
+/*    background-color: #fff;*/
+/*    padding: 2%;*/
+/*    overflow-y:scroll;	!* div 내 내용이 세로 길이를 초과하면 스크롤바가 생성됨. *!*/
+/*}*/
+
 /*#entityPickerDiv{*/
 /*    height: 50vh;*/
 /*    overflow-scrolling: auto;*/
