@@ -3,6 +3,11 @@ let date;   // 날짜 배열
 let country;    // 국가명(한글) 배열
 let totalconfirmed; // 총 확진자, drawVisualization()에서 데이타 뽑아내는 김에 해당 변수 초기화 시킴.
 let totalsuspected; // 총 유증상자
+let page=1; // 현재 페이지
+let totalpage; // 전체 페이지
+let size = 10; // 한 페이지에 표시할 국가수
+let startbtn=1;   // 페이징 버튼의 시작 번호
+let endbtn=10;     // 페이징 버튼의 끝 번호
 
 
 loadData(); // <--- 동기식 으로 설정되어있음
@@ -13,7 +18,7 @@ function runFunctions(){
 // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로임;;
     google.load('visualization', '1', {'packages': ['geochart']});
     google.setOnLoadCallback(drawVisualization);
-    showTable();
+    showTable(page);
 
 }
 
@@ -32,6 +37,7 @@ function loadData(){
     });
 }
 
+
 function getTable(){
     $.ajax({
         url:'/statistics/viewgeo',
@@ -40,10 +46,7 @@ function getTable(){
         success:function (jsonObject){
             console.log(jsonObject);
 
-
             let entity='';
-
-
             for(let i=0; i<jsonObject['발병국가수'];i++){
                 entity+='<div>' +
                     '<input type="checkbox" value="'+jsonObject["발병국명단"][0][i]+'">' +
@@ -59,7 +62,16 @@ function getTable(){
     });
 }
 
-function showTable(){
+function showTable(index){
+    page = index;
+    startbtn = Math.ceil(page/10);
+    if(startbtn>1){
+        startbtn = 1+(Math.ceil(page/10)-1)*10;
+    }
+    endbtn = startbtn+10-1;
+    if(endbtn>totalpage) endbtn = totalpage;
+    if(endbtn==0) endbtn = 1;
+
     let tablecode = '<tr>\n' +
         '                        <th> </th>\n' +
         '                        <th>국가</th>\n' +
@@ -68,14 +80,48 @@ function showTable(){
         '                        <th>비율(%)</th>\n' +
         '                    </tr>';
     for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
-        tablecode+='<tr>\n' +
-            '                        <td>'+(i+1)+'</td>\n' +
-            '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
-            '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
-            '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
-            '                        <td>모름%</td>\n' +
-            '                    </tr>';
+        if( i>=((index-1)*size) && i<(index*size) ){
+            tablecode+='<tr>\n' +
+    '                        <td>'+(i+1)+'</td>\n' +
+    '                        <td>'+geochartArray[i]['국가명']+'</td>\n' +
+    '                        <td>'+geochartArray[i]['확진자']+'</td>\n' +
+    '                        <td>'+geochartArray[i]['유증상자']+'</td>\n' +
+    '                        <td>모름%</td>\n' +
+    '                    </tr>';
+        }
+        if(i==(index*size)){
+            break;
+        }
+
     }
+    //////////////////////////// 페이징 버튼 생성 코드 ////////////////////////////////////
+    let pagehtml = "";
+
+    ////////////////////////// 이전 버튼 /////////////////////////////////////////////
+    if(startbtn==1){    // 현재 페이지가 첫페이지이면
+        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">이전</button> </li>';
+    }else{  // 현재페이지가 첫페이지가 아니면
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(startbtn-1)+')">이전</button> </li>';
+    }
+    ////////////////////////////////////////////////////////////////////////////////
+    for(let i = startbtn; i <= endbtn; i++) {
+        if(i==page){
+            pagehtml += '<li class="page-item active"><button class="page-link" type="button" onclick="showTable('+i+')">'+i+'</button> </li>';
+        }else{
+            pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+i+')">'+i+'</button> </li>';
+        }
+
+    }
+    ////////////////////////// 다음 버튼 ///////////////////////////////////////////////////
+    if(endbtn==totalpage || totalpage == 0){
+        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page)+')">다음</button> </li>';
+    }else{
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(startbtn+10)+')">다음</button> </li>';
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    $("#pagebtnbox").html(pagehtml);
+
     $('#totaltable').html(tablecode);
 }
 
@@ -86,6 +132,7 @@ function getGeoChartData(){
         method:'GET',
         success:function (jsonArray){
             geochartArray = jsonArray;
+            totalpage = Math.ceil((geochartArray.length/size));
             console.log(geochartArray);
             runFunctions();
 
