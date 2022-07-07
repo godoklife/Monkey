@@ -3,6 +3,12 @@
     font-weight: bold;
     color: #010B40;
     align: center;
+    position: fixed;
+    background-color: #e8e8e8;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    /*opacity: 0.5;*/
 }
 
 body{
