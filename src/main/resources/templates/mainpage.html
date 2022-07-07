@@ -11,10 +11,8 @@
     <link href="/css/travel.css" rel="stylesheet">
     <link href="/css/news.css" rel="stylesheet">
     <link href="/css/design.css" rel="stylesheet">
-
 </head>
 <body>
-
 
 <div class="container">
    <span class="design_title">MonkeyPox LIVE</span>
@@ -26,7 +24,7 @@
 
     </div>
 </div>
-<div th:replace="footer.html::footer"></div>
+
 <div class="sidebar" id="floatMenu">
     <div id="list-example" class="list-group">
         <button class="list-group-item list-group-item-action" onclick="pagemove('mappages')">전 세계 현황</button>
@@ -35,6 +33,10 @@
         <button class="list-group-item list-group-item-action" onclick="pagemove('contentdiv')">여행 경보 단계</button>
     </div>
 </div>
+
+<div th:replace="footer.html::footer"></div>
+
+
 
 
 
