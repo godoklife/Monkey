@@ -104,7 +104,6 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
         totalpage = Math.ceil((keyword.length/size));
     }
 
-
     console.log(keyword)
     showTable(page);
 }
@@ -112,7 +111,6 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
 // 정렬
 
 function showTable(index){  // 페이징처리
-
     // 페이지 기본값 : 확진자 많은 순으로 정렬
     geochartArray.sort(function (a, b){
         return b[sortingKey] - a[sortingKey];
@@ -152,17 +150,19 @@ function showTable(index){  // 페이징처리
         // 사용자가 지정한 기준값( keyword = 국가명이 담긴 배열의 형태 )에 따라 국가를 테이블에 출력
         let tmpindex=1;
         for(let i=0; i<geochartArray.length-1; i++){
-            if( i>=((index-1)*size) && i<(index*size) ) {
-                if (keyword.includes(geochartArray[i]['국가명'])) {
-                    tablecode += '<tr>\n' +
-                        '                        <td>' + tmpindex + '</td>\n' +
-                        '                        <td>' + geochartArray[i]['국가명'] + '</td>\n' +
-                        '                        <td>' + geochartArray[i]['확진자'] + '</td>\n' +
-                        '                        <td>' + geochartArray[i]['유증상자'] + '</td>\n' +
-                        '                        <td>모름%</td>\n' +
-                        '                    </tr>';
-                    tmpindex++;
+
+            if (keyword.includes(geochartArray[i]['국가명'])) {
+                if( tmpindex>((index-1)*size) && tmpindex<=(index*size) ) {
+                tablecode += '<tr>\n' +
+                    '                        <td>' + tmpindex + '</td>\n' +
+                    '                        <td>' + geochartArray[i]['국가명'] + '</td>\n' +
+                    '                        <td>' + geochartArray[i]['확진자'] + '</td>\n' +
+                    '                        <td>' + geochartArray[i]['유증상자'] + '</td>\n' +
+                    '                        <td>모름%</td>\n' +
+                    '                    </tr>';
+
                 }
+                tmpindex++;
             }
 
         }
@@ -172,10 +172,10 @@ function showTable(index){  // 페이징처리
     let pagehtml = "";
 
     ////////////////////////// 이전 버튼 /////////////////////////////////////////////
-    if(startbtn==1){    // 현재 페이지가 첫페이지이면
+    if(page==1){    // 현재 페이지가 첫페이지이면
         pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">이전</button> </li>';
     }else{  // 현재페이지가 첫페이지가 아니면
-        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(startbtn-1)+')">이전</button> </li>';
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">이전</button> </li>';
     }
     ////////////////////////////////////////////////////////////////////////////////
     for(let i = startbtn; i <= endbtn; i++) {
@@ -187,10 +187,10 @@ function showTable(index){  // 페이징처리
 
     }
     ////////////////////////// 다음 버튼 ///////////////////////////////////////////////////
-    if(endbtn==totalpage || totalpage == 0){
+    if(page==totalpage || totalpage == 0){
         pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page)+')">다음</button> </li>';
     }else{
-        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(startbtn+10)+')">다음</button> </li>';
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page+1)+')">다음</button> </li>';
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -209,8 +209,6 @@ function getGeoChartData(){
             totalpage = Math.ceil((geochartArray.length/size));
             console.log(geochartArray);
             runFunctions();
-
-
         },
         error:function (err){
             console.log(err);
