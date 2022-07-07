@@ -19,9 +19,9 @@
 }
 
 #totalconfirmed_div{
-    position: relative;
-    top:-480px;
-    left:660px;
+    /*position: relative;*/
+    /*top:-480px;*/
+    /*left:660px;*/
     z-index: 2;
 }
 
@@ -30,7 +30,7 @@
 }
 
 #totaltable{
-    width: 900px;
+    /*width: 900px;*/
 }
 
 #regions_div{
@@ -38,6 +38,12 @@
     height: 500px;
     z-index: 1;
 }
+/*라인차트 */
+#chartdiv {
+    height: 400px;
+    width: 100%;
+}
+
 
 /*.entityPickerDiv{ 작동안함 */
 /*    max-height:900px;*/

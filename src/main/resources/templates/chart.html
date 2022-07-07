@@ -8,20 +8,25 @@
 </head>
 <body>
 
-<div id="mappages" class="container">
+<div id="mappages" class="container containerPadding">
     <h3><span class="title_text">전 세계 현황</span></h3><br>
     <div class="row">
-        <div class="col-sm-2">
-            <div id="entityPickerDiv">
-                <input type="text" placeholder="국가명 입력">
-                <div id="entity-container">
-                    <!-- js에서 생성 -->
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-8">
+<!--        <div class="col-sm-2">-->
+<!--            <div id="entityPickerDiv">-->
+<!--                <input type="text" placeholder="국가명 입력">-->
+<!--                <div id="entity-container">-->
+<!--                    &lt;!&ndash; js에서 생성 &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div>
             <div id="regions_div"></div>
-            <div th:replace="linegraph.html::line"></div>
+
+            <div>
+                <h3> 전세계 일일 확진자 </h3>
+                <div id="chartdiv"></div>
+            </div>
+
             <div id="totalconfirmed_div"></div>
             <div>
                 <table id="totaltable" class="table">
