@@ -78,8 +78,6 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
     }else{
         totalpage = Math.ceil((keyword.length/size));
     }
-
-    console.log(keyword)
     showTable(page);
 }
 
@@ -181,7 +179,6 @@ function getGeoChartData(){
         success:function (jsonArray){
             geochartArray = jsonArray;
             totalpage = Math.ceil((geochartArray.length/size));
-            console.log(geochartArray);
             runFunctions();
         },
         error:function (err){

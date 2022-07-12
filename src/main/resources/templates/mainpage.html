@@ -20,8 +20,8 @@
         <div th:replace="chart.html::chart"></div>
         <div th:replace="news.html::news"></div>
         <div th:replace="mpinfo.html::mpinfo"></div>
+        <div th:replace="sidechart.html::sidechart"></div>
         <div th:replace="travel.html::travel"></div>
-
     </div>
 </div>
 
@@ -42,7 +42,8 @@
 
 
 
-
+<!-- 차트js.cdn -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="/js/jquery-3.6.0.js"></script>
 <!--라인차트 관련 js -->
@@ -60,5 +61,8 @@
 <script src="/js/mainpage.js"></script>
 <!--라인차트 불러오는 js-->
 <script src="/js/linegraph.js"></script>
+<!-- 막대 차트 js-->
+<script src="/js/sortbarchart.js"></script>
+<script src="/js/sidechart.js"></script>
 </body>
 </html>

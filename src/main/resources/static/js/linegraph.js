@@ -134,7 +134,6 @@ getdataDate(); // json 추출 함수 호출
 
 // Set data
     var data  = [];
-    console.log(jsondata);
     for(let i = 0; i < Object.keys(jsondata).length; i++){ // jsondata만큼반복
         // 날짜 분리
         let datea = Object.keys(jsondata)[i]; // key 날짜
@@ -155,8 +154,8 @@ getdataDate(); // json 추출 함수 호출
                 , value : datevalu};
         }
     }
-    console.log(data);
     series.data.setAll(data);
+
 
 
 // Make stuff animate on load
