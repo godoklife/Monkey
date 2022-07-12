@@ -29,12 +29,12 @@ function runFunctions(){
 function loadData(){
     $.ajax({
         url:'/statistics/loaddata',
-        data : {"language" : "kr"},
+        data : {"language" : "en"},
         method:'get',
         async:false,
         success:function (args) {
             if(args===false){
-                alert('예외발생. 콘솔 읽어보셈');
+                alert('Error loading data');
             }
         }
     });
@@ -127,10 +127,10 @@ function showTable(index){  // 페이징처리
 
     let tablecode = '<tr>\n' +
         '                        <th> </th>\n' +
-        '                        <th>국가</th>\n' +
-        '                        <th>확진자</th>\n' +
-        '                        <th>유증상자</th>\n' +
-        '                        <th>비율(%)</th>\n' +
+        '                        <th>Country</th>\n' +
+        '                        <th>Confirmed</th>\n' +
+        '                        <th>Symptoms</th>\n' +
+        '                        <th>Percentage(%)</th>\n' +
         '                    </tr>';
     if(keyword===undefined || keyword.length===0){
         for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
@@ -174,9 +174,9 @@ function showTable(index){  // 페이징처리
 
     ////////////////////////// 이전 버튼 /////////////////////////////////////////////
     if(page==1){    // 현재 페이지가 첫페이지이면
-        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">이전</button> </li>';
+        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">before</button> </li>';
     }else{  // 현재페이지가 첫페이지가 아니면
-        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">이전</button> </li>';
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">before</button> </li>';
     }
     ////////////////////////////////////////////////////////////////////////////////
     for(let i = startbtn; i <= endbtn; i++) {
@@ -189,9 +189,9 @@ function showTable(index){  // 페이징처리
     }
     ////////////////////////// 다음 버튼 ///////////////////////////////////////////////////
     if(page==totalpage || totalpage == 0){
-        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page)+')">다음</button> </li>';
+        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page)+')">next</button> </li>';
     }else{
-        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page+1)+')">다음</button> </li>';
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page+1)+')">next</button> </li>';
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +213,7 @@ function getGeoChartData(){
         },
         error:function (err){
             console.log(err);
-            alert("잠시후 다시 시도해주세요 : 코드 똑바로 짜시오.")
+            alert("Please try again later")
         }
     });
 }
@@ -232,12 +232,12 @@ function drawVisualization() {
 
     for(let i=0; i<geochartArray.length; i++){
         data.addRows([[{v:geochartArray[i]['ISO'],f:geochartArray[i]['국가명']},
-            geochartArray[i]['확진자'],'확진자 : '+geochartArray[i]['확진자']+'\n' +
-            '유증상자 : '+geochartArray[i]['유증상자']+'']]);
+            geochartArray[i]['확진자'],'Confirmed : '+geochartArray[i]['확진자']+'\n' +
+            'Symptoms : '+geochartArray[i]['유증상자']+'']]);
         ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
         if(i===geochartArray.length-1){
             totalconfirmed = geochartArray[i]['확진자총합'];
-            let code='<span>금일 전 세계 확진자 수 : '+totalconfirmed+'</span>';
+            let code='<span>number of confirmed cases worldwide : '+totalconfirmed+'</span>';
             $('#totalconfirmed_div').html(code);
         }
     }

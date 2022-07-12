@@ -43,3 +43,8 @@ body{
 footer_body{
     background-color: #010326;
 }
+
+#chartdiv {
+    width: 100%;
+    height: 400px;
+}
