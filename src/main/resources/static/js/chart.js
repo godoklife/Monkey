@@ -207,7 +207,7 @@ function drawVisualization() {
         data.addRows([[{v:geochartArray[i]['ISO'],f:geochartArray[i]['국가명']},
             geochartArray[i]['확진자'],'확진자 : '+geochartArray[i]['확진자']+'\n' +
             '유증상자 : '+geochartArray[i]['유증상자']+'']]);
-        ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
+        // ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
         if(i===geochartArray.length-1){
             totalconfirmed = geochartArray[i]['확진자총합'];
             let code='<span>금일 전 세계 확진자 수 : '+totalconfirmed+'</span>';
@@ -225,15 +225,15 @@ function drawVisualization() {
         width:document.getElementById('regions_div').clientWidth
     };
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-    // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.
-    google.visualization.events.addListener(chart, 'select', function() {
-        var selection = chart.getSelection();
-        if (selection.length == 1) {
-            var selectedRow = selection[0].row;
-            var selectedRegion = data.getValue(selectedRow, 0);
-            if(ivalue[selectedRegion] != '') { window.open(ivalue[selectedRegion]);  }
-        }
-    });
+    // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.    ->> 모바일에서 컨트롤하기 힘듬. 삭제
+    // google.visualization.events.addListener(chart, 'select', function() {
+    //     var selection = chart.getSelection();
+    //     if (selection.length == 1) {
+    //         var selectedRow = selection[0].row;
+    //         var selectedRegion = data.getValue(selectedRow, 0);
+    //         if(ivalue[selectedRegion] != '') { window.open(ivalue[selectedRegion]);  }
+    //     }
+    // });
     chart.draw(data, options);
 
 }
