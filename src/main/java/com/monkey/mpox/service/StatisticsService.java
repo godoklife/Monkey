@@ -36,9 +36,9 @@ public class StatisticsService {
 
     public boolean loadData(String language){
 
-//        boolean flag1 = getjsonFromServer();
+        boolean flag1 = getjsonFromServer();
             // @@@@@@@@@@@ 나중에 다시 열어놓을것, 반복적으로 다운로드하면 혼날까봐 잠깐 막음 @@@@@@@@@@@
-        boolean flag1 = true;
+//        boolean flag1 = true;
         boolean flag2 = putCommonChartDataList(language);
 
         if(flag1 && flag2)
