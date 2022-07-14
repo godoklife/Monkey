@@ -1,5 +1,5 @@
 getnews();
-getyoutube();
+
 let html="";
 function getnews() {
     $.ajax({
@@ -16,7 +16,7 @@ function getnews() {
         }
     });
 }
- 
+
 /*function getyoutube(){ 대기
     $.ajax({
         url:"/getyoutubeurl",

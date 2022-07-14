@@ -1,5 +1,6 @@
 
-
+var root;
+let count = 10;
 let jsondate2 = new Object();
 
 /* 데이터 가져오기 */
@@ -22,9 +23,21 @@ function getGeoChartData(){
 
 am5.ready(function() {
     getGeoChartData();//데이터호출
-// Create root element
-// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-    var root = am5.Root.new("chartdiv2");
+
+    getchar();
+}); // end am5.ready()
+
+function setchartnum(re){
+    count = re;
+    root.dispose(); // 기존 차트 삭제
+    getchar();
+}
+
+
+
+function getchar(){
+
+    root = am5.Root.new("chartdiv2");
 
 
 // Set themes
@@ -99,10 +112,18 @@ am5.ready(function() {
 
 // 데이터 넣기
     var data = [];
-    for(let i = 0; i < 15 ; i++){
-        /*console.log(jsondate2[i]["확진자"]);*/
-        data[i] = {"country" : jsondate2[i]["국가명"],
-            "value" : jsondate2[i]["확진자"]};
+    if(count == -1){
+        for(let i = 0; i < jsondate2.length ; i++){
+            /*console.log(jsondate2[i]["확진자"]);*/
+            data[i] = {"country" : jsondate2[i]["국가명"],
+                "value" : jsondate2[i]["확진자"]};
+        }
+    }else{
+        for(let i = 0; i < count ; i++){
+            /*console.log(jsondate2[i]["확진자"]);*/
+            data[i] = {"country" : jsondate2[i]["국가명"],
+                "value" : jsondate2[i]["확진자"]};
+        }
     }
     xAxis.data.setAll(data);
     series.data.setAll(data);
@@ -112,8 +133,7 @@ am5.ready(function() {
 // https://www.amcharts.com/docs/v5/concepts/animations/
     series.appear(1000);
     chart.appear(1000, 100);
-
-}); // end am5.ready()
+}
 
 
 
