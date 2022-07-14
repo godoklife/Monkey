@@ -11,6 +11,21 @@ public class IndexController {
         return "mainpage";
     }
 
+    @GetMapping("/en")
+    public String mainpage_en(){
+        return "mainpage_en";
+    }
+
+    @GetMapping("/zh")
+    public String mainpage_zh(){
+        return "mainpage_zh";
+    }
+
+    @GetMapping("/ja")
+    public String mainpage_ja(){
+        return "mainpage_ja";
+    }
+
     @GetMapping("/travel")
     public String travel(){
         return "travel";

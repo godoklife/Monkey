@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>MONKEYPOX LIVE</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="/css/global.css" rel="stylesheet">
+    <link href="/css/language.css" rel="stylesheet">
     <link href="/css/integrated.css" rel="stylesheet">
     <link href="/css/mpinfo.css" rel="stylesheet">
     <link href="/css/travel.css" rel="stylesheet">
     <link href="/css/news.css" rel="stylesheet">
     <link href="/css/design.css" rel="stylesheet">
-
 </head>
 <body>
 
@@ -27,48 +25,33 @@
    <span class="design_title">MonkeyPox LIVE</span>
     <div class="row">
         <div th:replace="chart.html::chart"></div>
-        <div th:replace="news.html::news"></div>
+        <div th:replace="linegraph.html::line"></div>        <div th:replace="news.html::news"></div>
         <div th:replace="mpinfo.html::mpinfo"></div>
-        <div th:replace="sidechart.html::sidechart"></div>
         <div th:replace="travel.html::travel"></div>
-
     </div>
 </div>
-
+<div th:replace="footer.html::footer"></div>
 <div class="sidebar" id="floatMenu">
     <div id="list-example" class="list-group">
-        <button class="list-group-item list-group-item-action" onclick="pagemove('mappages')">전 세계 현황</button>
-        <button class="list-group-item list-group-item-action" onclick="pagemove('newspage')">관련 뉴스</button>
-        <button class="list-group-item list-group-item-action" onclick="pagemove('infopage')">원숭이 두창이란?</button>
-        <button class="list-group-item list-group-item-action" onclick="pagemove('contentdiv')">여행 경보 단계</button>
+        <button class="list-group-item list-group-item-action" onclick="pagemove('mappages')">全球事实</button>
+        <button class="list-group-item list-group-item-action" onclick="pagemove('newspage')">相关新闻</button>
+        <button class="list-group-item list-group-item-action" onclick="pagemove('infopage')">什么是猴痘？</button>
+        <button class="list-group-item list-group-item-action" onclick="pagemove('contentdiv')">旅行警戒阶段</button>
     </div>
 </div>
 
-<div th:replace="footer.html::footer"></div>
 
 
 
-<!-- 차트js.cdn -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <script src="/js/jquery-3.6.0.js"></script>
-<!--라인차트 관련 js -->
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<!--부트스트랩 js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="/js/mpinfo.js"></script>
 <script src="/js/news.js"></script>
 <script src="/js/travel.js"></script>
 <script src="/js/chart.js"></script>
-
-<!--라인차트 불러오는 js-->
-<script src="/js/linegraph.js"></script>
-<!-- 막대 차트 js-->
-<script src="/js/sortbarchart.js"></script>
-<script src="/js/sidechart.js"></script>
 <script src="/js/mainpage.js"></script>
 </body>
 </html>

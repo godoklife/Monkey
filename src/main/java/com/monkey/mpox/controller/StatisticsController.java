@@ -4,6 +4,7 @@ import com.monkey.mpox.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +17,14 @@ public class StatisticsController {
     @Autowired StatisticsService statisticsService;
     @Autowired HttpServletResponse response;
 
+    @GetMapping("/selectlanguage")  // 언어 선택시
+    public void selectLanguage() {
+        statisticsService.selectlanguage(); // 기존 json 데이터 지우기
+    }
+
     @GetMapping("/loaddata")    // 모든 데이타들 메모리에 올리기
-    public boolean loaddata(){
-        return statisticsService.loadData();
+    public boolean loaddata(@RequestParam String language){
+        return statisticsService.loadData(language);
     }
 
 

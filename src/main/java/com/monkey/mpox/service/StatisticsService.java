@@ -29,12 +29,17 @@ public class StatisticsService {
     String dir;
 
 
-    public boolean loadData(){
+    public void selectlanguage(){
+        commonChartDataList.clear();
+    }
 
-        boolean flag1 = getjsonFromServer();
+
+    public boolean loadData(String language){
+
+//        boolean flag1 = getjsonFromServer();
             // @@@@@@@@@@@ 나중에 다시 열어놓을것, 반복적으로 다운로드하면 혼날까봐 잠깐 막음 @@@@@@@@@@@
-//        boolean flag1 = true;
-        boolean flag2 = putCommonChartDataList();
+        boolean flag1 = true;
+        boolean flag2 = putCommonChartDataList(language);
 
         if(flag1 && flag2)
             return true;
@@ -164,19 +169,32 @@ public class StatisticsService {
             // (1) 날짜별 감염자 리스트 (2) 국가 3자리코드-> 2자리코드 변환용 json (3) 국가 3자리코드 -> 우리말 변환용 json
         // 2. 국가 코드를 변환 후
         // 3. JSONObject 단위로 List에 add
-    public boolean putCommonChartDataList(){
+    public boolean putCommonChartDataList(String language){
         if( ! commonChartDataList.isEmpty()){   // 새로고침 눌렀을 때 중복실행 방지
             return true;
         }
         try {
             JSONArray todayjsonArray = readjsonArrayFile();
             JSONObject iso2Object = readjsonObjectFile("iso3toiso2");
-            JSONObject koreanObject = readjsonObjectFile("iso3tokorean");
+            JSONObject languageobject = null;
+            System.out.println(language);
+            if(language.equals("kr")){
+                System.out.println("한국어페이지");
+                languageobject = readjsonObjectFile("iso3tokorean");
+            }else if(language.equals("en")){
+                System.out.println("영어페이지");
+                languageobject = readjsonObjectFile("iso3toenglish");
+            }else if(language.equals("zh")){
+                languageobject = readjsonObjectFile("iso3tochinese");
+            }else if(language.equals("ja")){
+                languageobject = readjsonObjectFile("iso3tojapanese");
+            }else{ return false; }
+
             for(int i=0; i<todayjsonArray.length(); i++){
                 JSONObject tmpObject =  todayjsonArray.getJSONObject(i);
                 CommonChartData tmpChartData = CommonChartData.builder()
                         .status( tmpObject.getString("Status"))
-                        .country(koreanObject.getString(tmpObject.getString("Country_ISO3")))
+                        .country(languageobject.getString(tmpObject.getString("Country_ISO3")))
                         // iso3306 3자리코드 -> 우리말 국가명으로 변환
                         .countryISO2( iso2Object.getString(tmpObject.getString("Country_ISO3")))
                         // iso3306 3자리코드 -> iso3306 2자리코드로 변환
