@@ -1,0 +1,303 @@
+/* global css */
+@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+
+}
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr,
+address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var,
+b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot,
+thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header,
+hgroup, menu, nav, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+}
+
+
+#sidebar{
+    position: fixed;
+    top: 30%;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+}
+
+.txt{
+    font-size: 16px;
+
+}
+.containerPadding{
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.container{
+    background-color: #FFFFFF;
+    border-bottom: solid 3px #bbb;
+}
+
+
+
+/* news css */
+h3 ,h4 ,h5{
+    text-align: center;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+
+    font-weight: bold;
+    color: var(--color);
+}
+a:hover{
+    color:blue;
+}
+span{
+    font-size:11px;
+}
+
+#newstable{
+    align-content: center;
+}
+.newsbox:nth-child(2n + 1) {
+    background: #d2d2d280;
+}
+.newsnum{
+    text-align: center;
+}
+
+.table td, th {
+    padding: 10px 7px;
+}
+/* mpinfo css */
+.content_title{
+    font-size: 26px;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.content_subtitle{
+    margin : 20px 0px 15px 0px;
+    text-align: left;
+    font-size: 24px;
+    color: #043763;
+    font-weight: bold;
+
+    position: relative;
+    letter-spacing: -0.03em;
+    padding-left: 1.2rem;
+}
+.content_subtitle:before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border: 3px solid #11416b;
+      border-radius: 50%;
+      position: absolute;
+      left: 0.2rem;
+      top: 3px;
+}
+.content_divbox{
+    border: 1px solid black;
+    padding: 8px;
+    background-color: #f5f6fa;
+}
+.content_text{
+    font-size: 15px;
+    letter-spacing: 1.5px;
+}
+.content_li{
+    font-size: 15px;
+}
+.content_li:before {
+    content: "·";
+    width : 10px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 15px;
+    padding-top: 5px;
+}
+.source_site{
+    font-size: 15px;
+}
+.boldtext{
+    font-weight: bold;
+    font-size: 16px;
+}
+.table_title{
+    font-size: 15px;
+    text-align: center;
+    margin:15px 0px 5px 0px;
+}
+.content_table th{
+    font-size : 16px;
+    background-color: #f5f7fd;
+    text-align: center;
+}
+.content_table li{
+    font-size : 14px;
+}
+
+ul{
+  padding:0
+}
+.content_table{
+  list-style: none;
+  display: table-cell;
+  vertical-align: inherit;
+}
+.content_table li{
+  position: relative;
+  margin: 2px 0 0 0;
+  padding: 0 0 4px 16px;
+  font-size:16px;
+  color: #000;
+}
+.content_table li:before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 5px;
+  width: 2px;
+  height: 2px;
+  border-radius: 100%;
+  background-color: #8d8d8d;
+}
+.imgbtn:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+.imgbtn{
+    font-size: 15px;
+}
+
+.minfoimg{
+    width: 100%;
+}
+
+.top_menu li{
+    font-size: 15px;
+}
+
+.mpinfo_title{
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#floatMenu {
+    position: absolute;
+    width: 150px;
+    height: 200px;
+    left: 50px;
+    top: 20%;
+    color: #fff;
+}
+
+/* travel css */
+.title{
+    border-bottom: 1px solid #c8c8c8;
+    background-color: #F7F7F7;
+    font-size: 17px;
+    font-weight: bold;
+    padding: 8px;
+    text-align: center;
+}
+#reserve li,
+#suasion li,
+#prohibition li{
+    list-style: none;
+    padding: 10px 15px 10px 15px;
+    font-size: 15px;
+}
+.spandiv{font-size: 15px;}
+/* design css */
+.design_title{
+    font-size: 20px;
+    font-weight: bold;
+    color: #010B40;
+    align: center;
+    position: fixed;
+    background-color: #e8e8e8;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    /*opacity: 0.5;*/
+}
+body{
+    background-color: #e8e8e8;
+}
+.title_text{
+    font-size: 26px;
+    font-weight: bold;
+    align-content: center;
+}
+.entityPickerDiv{
+    margin-top: 30px;
+}
+
+.newsbox td{
+    padding: 10px;
+}
+
+.footer{
+    background-color: var(--bg-color);
+      color: var(--color);
+    text-align: center;
+
+}
+.textsmall{
+    font-size:15px;
+}
+.footer_text , a{
+     font-size: 25px;
+}
+/* integ css */
+#totalconfirmed_div{
+    /*position: relative;*/
+    /*top:-480px;*/
+    /*left:660px;*/
+    z-index: 2;
+}
+
+#totalconfirmed_div span{
+    font-size: 16px;
+}
+
+#totaltable{
+    /*width: 900px;*/
+}
+
+#regions_div{
+    /*width: 900px;*/
+    /*height: 500px;*/
+    z-index: 1;
+}
+/*라인차트 */
+#chartdiv {
+    height: 400px;
+    width: 100%;
+    background-color: none !important;
+}
+
+
+/*.entityPickerDiv{ 작동안함 */
+/*    max-height:900px;*/
+/*    background-color: #fff;*/
+/*    padding: 2%;*/
+/*    overflow-y:scroll;	!* div 내 내용이 세로 길이를 초과하면 스크롤바가 생성됨. *!*/
+/*}*/
+
+/*#entityPickerDiv{*/
+/*    height: 50vh;*/
+/*    overflow-scrolling: auto;*/
+/*}*/
