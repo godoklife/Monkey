@@ -23,4 +23,38 @@ public class NewsController {
         }
 
     }
+
+    @GetMapping("/getennews")
+    public void getennews(HttpServletResponse response){
+        try{
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(newsService.getennews());
+        }catch(Exception e){
+
+        }
+    }
+
+    @GetMapping("/getjpnews")
+    public void getjpnews(HttpServletResponse response){
+        try{
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(newsService.getjpnews());
+        }catch(Exception e){
+
+        }
+    }
+
+    @GetMapping("/getcnnews")
+    public void getcnnews(HttpServletResponse response){
+        try{
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().print(newsService.getcnnews());
+        }catch(Exception e){
+
+        }
+    }
+
 }

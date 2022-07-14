@@ -39,3 +39,12 @@ hgroup, menu, nav, section, summary, time, mark, audio, video {
     font-size: 16px;
 
 }
+.containerPadding{
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.container{
+    background-color: #FFFFFF;
+    border-bottom: solid 3px #bbb;
+}

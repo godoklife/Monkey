@@ -1,8 +1,8 @@
 let continent = new Object();
-gettravel(); // 처음시작 함수 호출
-
+/*gettravel(); // 처음시작 함수 호출*/
+startview(); // 처음시작하면 이 무엇인지
 //JSON 가져오기 함수
-function gettravel(){
+/*function gettravel(){
     $.ajax({
         url:"/travel/gettravel",
         method:"GET",
@@ -11,7 +11,7 @@ function gettravel(){
             division(re);
         }
     });
-}
+}*/
 
 //분류 함수
 function division(re){
@@ -39,18 +39,34 @@ function isKeyExists(obj,key){
         return true;
     }
 }
+// 모바일정도의 크기라면
+function startview() {
+    if($(window).width() < 768){
+        $("#floatMenu").css({"display" : "none"}); // 네비게이션 삭제
+    }else{
+        $("#floatMenu").css({"display" : ""}); // 네비게이션 생성
+    }
+}
+
 
 
 //가로크기 변환되었을때 실행함수
 $(window).resize(function() {
-    if($(window).width() < 767) {
+    if($(window).width() < 768) {
+        console.log("gd");
         $(".title").addClass("rounded");
         $(".title").css({"border-top": "1px solid #c8c8c8"});
+        startview(); // 가로크기의 따른 네비 유무 함수
     }else{
         $(".title").removeClass("rounded");
         $(".title").css({"border-top": ""});
+        startview(); // 가로크기의 따른 네비 유무 함수
     }
 });
+
+//모바일 버전 네비게이션 이동
+
+
 // html
 function inserthtml(lv){
     let html = "";
@@ -91,6 +107,9 @@ function pagemove( idkey ){
     let offset = $('#'+idkey+'').offset();
     $("html, body").animate({scrollTop: offset.top - 40},400);
 }
+
+
+
 //스크롤 이베트
 $(document).ready(function() {
 

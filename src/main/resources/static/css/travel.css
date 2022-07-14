@@ -11,7 +11,7 @@
 #suasion li,
 #prohibition li{
     list-style: none;
-    padding-left: 30px;
+    padding: 10px 15px 10px 15px;
     font-size: 15px;
 }
 

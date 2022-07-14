@@ -3,19 +3,18 @@
     font-weight: bold;
     color: #010B40;
     align: center;
+    position: fixed;
+    background-color: #e8e8e8;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+    /*opacity: 0.5;*/
 }
 
 body{
     background-color: #e8e8e8;
 }
 
-.container{
-    background-color: #FFFFFF;
-}
-
-#newspage, #infopage, #travelinfo{
-    margin-top: 100px;
-}
 .title_text{
     font-size: 26px;
     font-weight: bold;
@@ -40,6 +39,9 @@ body{
 .footer_text , a{
      font-size: 25px;
 }
+
+
+/*sdsdfsdfsdfdzfsdfsdfsdfsd*/
 footer_body{
     background-color: #010326;
 }

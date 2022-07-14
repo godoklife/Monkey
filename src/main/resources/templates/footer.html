@@ -6,20 +6,40 @@
     <link rel="stylesheet" href="/css/design.css">
 </head>
 <body class="footer_body">
-
-<div class="footer col-md-6 offset-3">
-    <span>
-        <p class="footer_text">서버 비용 지원해주기</p><a></a>
-        <br>
-        <p class="footer_text">원숭이두창 라이브 <a style="color: black;" href="https://github.com/godoklife/Monkey">(GIT)</a></p>
-        <br>
-        <p class="footer_text">이메일로 제보 & 잘못된 정보 정정 요청 받습니다.</p>
-        <br>
-       <p class="textsmall">*주의: 본 사이트에서 제공하는 통계 수치는 대한민국 질병관리 본부 및 세계 각국 관련 부처 보도자료, 국내외 언론 기사 등을 토대로 업데이트 되지만,
-        개인이 취합한 내용이므로 수치의 정확성에 대해 책임질 수 없으며, 공식적인 근거 자료로 활용될 수 없습니다. 본 사이트에서 제공하는 내용의 인용과 사용에 대한 책임은 전적으로 인용자 및 사용자에게 있음을 알립니다.</p>
-    </span>
+<div class="container containerPadding">
+    <div class="footer" style="background-color: #fff">
+        <span>
+            <p class="footer_text">서버 비용 지원해주기</p><a></a>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              계좌후원
+            </button>
+            <p class="footer_text">원숭이두창 라이브 <a style="color: black;" href="https://github.com/godoklife/Monkey">(GIT)</a></p>
+            <br>
+            <p class="footer_text">이메일로 제보 & 잘못된 정보 정정 요청 받습니다.</p>
+            <br>
+           <p class="textsmall">*주의: 본 사이트에서 제공하는 통계 수치는 대한민국 질병관리 본부 및 세계 각국 관련 부처 보도자료, 국내외 언론 기사 등을 토대로 업데이트 되지만,
+            개인이 취합한 내용이므로 수치의 정확성에 대해 책임질 수 없으며, 공식적인 근거 자료로 활용될 수 없습니다. 본 사이트에서 제공하는 내용의 인용과 사용에 대한 책임은 전적으로 인용자 및 사용자에게 있음을 알립니다.</p>
+        </span>
+    </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">서버 비용 지원</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                신한 110-436-907901 박민욱
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

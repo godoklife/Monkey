@@ -13,15 +13,18 @@ let sortingKey = "확진자"  // <-- value로 검색 후에도 정렬하기 위�
 
 
 loadData(); // <--- 동기식 으로 설정되어있음
-
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 function runFunctions(){
 // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로임;;
-    google.load('visualization', '1', {'packages': ['geochart']});
-    google.setOnLoadCallback(drawVisualization);
+    runGoogleChart();
     showTable(page);    // <-- 지오차트 바로 하단 테이블 출력
     getTable();
+      // <-- 브라우저 크기 변경시 구글맵 다시 로드(리사이징 위해서)
+}
 
+function runGoogleChart(){
+    google.load('visualization', '1', {'packages': ['geochart']});
+    google.setOnLoadCallback(drawVisualization);
 }
 
 
@@ -39,34 +42,6 @@ function loadData(){
         }
     });
 }
-
-// function getTable(){
-//     $.ajax({
-//         url:'/statistics/viewgeo',
-//         data:{},
-//         method:'GET',
-//         success:function (jsonObject){
-//             console.log(jsonObject);
-//             let entity='';
-//             for(let i=0; i<jsonObject['발병국가수'];i++){
-//                 let countryName = jsonObject['발병국명단'][0][i];
-//                 if(countryName.includes(' ')){
-//                     countryName = jsonObject['발병국명단'][0][i].replace(' ', '&nbsp;');
-//                 }
-//                 entity+='<div>' +
-//                     '<input type="checkbox" id="chk'+jsonObject["발병국명단"][0][i]+'" ' +
-//                     'onclick=chkcheckbox("'+jsonObject["발병국명단"][0][i]+'")>' +
-//                     '<span> '+jsonObject["발병국명단"][0][i]+' </span>' +
-//                     '</div>';
-//             }
-//             $("#entity-container").html(entity);
-//         },
-//         error:function (err){
-//             console.log(err);
-//             alert("잠시후 다시 시도해주세요 : 코드 똑바로 짜시오.")
-//         }
-//     });
-// }
 
 function getTable(){
 
@@ -104,13 +79,10 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
     }else{
         totalpage = Math.ceil((keyword.length/size));
     }
-
-    console.log(keyword)
     showTable(page);
 }
 
 // 정렬
-
 function showTable(index){  // 페이징처리
     // 페이지 기본값 : 확진자 많은 순으로 정렬
     geochartArray.sort(function (a, b){
@@ -208,7 +180,6 @@ function getGeoChartData(){
         success:function (jsonArray){
             geochartArray = jsonArray;
             totalpage = Math.ceil((geochartArray.length/size));
-            console.log(geochartArray);
             runFunctions();
         },
         error:function (err){
@@ -247,8 +218,9 @@ function drawVisualization() {
         colorAxis: {
             colors:['#ffe1e1','#750000']
         },
-        defaultColor:'#c0ffab'
-
+        defaultColor:'#c0ffab',
+        keepAspectRatio:true,
+        width:document.getElementById('regions_div').clientWidth
     };
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
     // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.
