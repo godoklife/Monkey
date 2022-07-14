@@ -58,18 +58,13 @@ $(document).ready(function (){
 
         let html='';
         if(sender===username){  // 내가 보낸 메시지라면
-            html+='<li class="message">' +
-                '            <div class="messageWrap">' +
-                '                <span class="author">'+sender+'</span>' +
-                '                <span class="message">'+message+'</span>' +
-                '            </div>' +
-                '            <div class="dateWrap">' +
-                '                <span class="datetime">시간표시</span>' +
-                '            </div>' +
-                '        </li>';
+            html+='<div class="alert alert-success">' +
+                '          <span> '+sender+' : '+message+' </span>' +
+                '           <br>' +
+                '        </div>';
 
         }else{  // 다른사람이 보낸 메시지라면
-            html+='<div class="alert alert-success">' +
+            html+='<div class="alert alert-secondary">' +
                 '          <span> '+sender+' : '+message+' </span>' +
                 '           <br>' +
                 '        </div>';
