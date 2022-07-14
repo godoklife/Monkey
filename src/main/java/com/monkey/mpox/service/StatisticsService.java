@@ -111,7 +111,6 @@ public class StatisticsService {
             bis.close();
             fis.close();
             JSONArray jsonArray = new JSONArray(new String(bytes));
-
             return jsonArray;
         }catch (Exception e){System.out.println("readJsonFile()_exception : "+e);}
 
@@ -318,7 +317,7 @@ public class StatisticsService {
                             메모리.get("data").get(date).get(iso).get(2).put("유증상자" , i1+1 );
                             totalsuspected++;
                         }
-                        
+
                     }else {
                         코드명 = new HashMap<>();   // isocode2 : value 를 담을 map
 

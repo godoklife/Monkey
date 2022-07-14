@@ -44,6 +44,11 @@
     width: 100%;
 }
 
+.daycharttitlte{
+    display: inline-block;
+    margin-left: 20px;
+}
+
 /* 가로막대정렬그래프 */
 #chartdiv2 {
     width: 100%;
