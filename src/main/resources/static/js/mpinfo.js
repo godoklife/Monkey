@@ -155,11 +155,11 @@ function preventive(){
 
 function img(){
     let html = '<td>발진 사진</td>'+
-               '<td><img src="/img/1_mp.jpg"></td>'+
-               '<td><img src="/img/2_vl.jpg"></td>'+
-               '<td><img src="/img/3_hz.jpg"></td>'+
-               '<td><img src="/img/4_hs.jpg"></td>'+
-               '<td><img src="/img/5_ml.jpg"></td>';
+               '<td><img class="minfoimg" src="/img/1_mp.jpg"></td>'+
+               '<td><img class="minfoimg" src="/img/2_vl.jpg"></td>'+
+               '<td><img class="minfoimg" src="/img/3_hz.jpg"></td>'+
+               '<td><img class="minfoimg" src="/img/4_hs.jpg"></td>'+
+               '<td><img class="minfoimg" src="/img/5_ml.jpg"></td>';
     $("#table_img").html(html);
 }
 

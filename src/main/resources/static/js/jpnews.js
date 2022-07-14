@@ -1,9 +1,9 @@
-getnews();
+getjpnews();
 
 let html="";
-function getnews() {
+function getjpnews() {
     $.ajax({
-        url: '/getnews',
+        url: '/getjpnews',
         success : function(news){
             for(let i=0 ; i< news.length ; i++){
                 html +=
