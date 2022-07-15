@@ -16,3 +16,13 @@ function getnews() {
         }
     });
 }
+
+/*function getyoutube(){ 대기
+    $.ajax({
+        url:"/getyoutubeurl",
+        success: function (re){
+            console.log(re);
+        }
+    })
+}*/
+

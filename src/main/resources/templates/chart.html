@@ -22,12 +22,41 @@
         <div>
             <div id="regions_div"></div>
 
-            <div style="margin-top: 30px"> <!-- 메인 첫번째 차트 marging [ 임시 ]-->
-                <h3> 전세계 일일 확진자 </h3>
+            <div style="margin-top: 50px"> <!-- 메인 첫번째 차트 marging [ 임시 ]-->
+                <div class="div1_titles">
+                        <div class="div1_select btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input onclick="setchartdiv1(1)" type="radio" class="btn-check" name="btnradio_1" id="btnradio1_1" autocomplete="off" checked>
+                            <label  class="btn btn-outline-primary" for="btnradio1_1">일일</label>
+
+                            <input onclick="setchartdiv1(3)" type="radio" class="btn-check" name="btnradio_1" id="btnradio1_2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio1_2">주간</label>
+
+                            <input onclick="setchartdiv1(2)" type="radio" class="btn-check" name="btnradio_1" id="btnradio1_3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio1_3">월간</label>
+                        </div>
+
+                    <h3 id="daycharttitlte" class="daycharttitlte"> 전세계 확진자 </h3>
+                </div>
                 <div id="chartdiv"></div>
             </div>
+
             <div style="margin-top: 30px"> <!-- 메인 두번째 차트 marging [ 임시 ]-->
-                <h3> 나라별 확진자 <span class="barspan">[ 상위15개 ]</span>  </h3>
+                <div class="div2_titles">
+                    <div class="btn-group div2_select" role="group" aria-label="Basic radio toggle button group">
+                        <input onclick="setchartnum(5)" type="radio" class="btn-check" name="btnradio_2" id="btnradio2_1" autocomplete="off" checked>
+                        <label id="" class="btn btn-outline-primary" for="btnradio2_1">5개</label>
+
+                        <input type="radio" class="btn-check" name="btnradio_2" id="btnradio2_2" autocomplete="off">
+                        <label onclick="setchartnum(10)" class="btn btn-outline-primary" for="btnradio2_2">10개</label>
+
+                        <input type="radio" class="btn-check" name="btnradio_2" id="btnradio2_3" autocomplete="off">
+                        <label onclick="setchartnum(15)" class="btn btn-outline-primary" for="btnradio2_3">15개</label>
+
+                        <input type="radio" class="btn-check" name="btnradio_2" id="btnradio2_4" autocomplete="off">
+                        <label onclick="setchartnum(-1)" class="btn btn-outline-primary" for="btnradio2_4">모두보기</label>
+                    </div>
+                    <h3 class="daycharttitlte"> 나라별 </h3>
+                </div>
                 <div id="chartdiv2"></div>
             </div>
 

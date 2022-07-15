@@ -142,7 +142,7 @@ let count = 0;
             tooltip: am5.Tooltip.new(root, {})
         })
     );
-
+    let chco = 0;
     function createAxisAndSeries(startValue, opposite) {
         var yRenderer = am5xy.AxisRendererY.new(root, {
             opposite: opposite
@@ -154,25 +154,25 @@ let count = 0;
             })
         );
 
+
         if (chart.yAxes.indexOf(yAxis) > 0) {
             yAxis.set("syncWithAxis", chart.yAxes.getIndex(0));
         }
 
         // Add series
         // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-        var series = chart.series.push(
-            am5xy.LineSeries.new(root, {
-                xAxis: xAxis,
-                yAxis: yAxis,
-                valueYField: "value",
-                valueXField: "date",
-                tooltip: am5.Tooltip.new(root, {
-                    pointerOrientation: "horizontal",
-                    labelText: "{valueY}"
+            var series = chart.series.push(
+                am5xy.LineSeries.new(root, {
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueYField: "value",
+                    valueXField: "date",
+                    tooltip: am5.Tooltip.new(root, {
+                        pointerOrientation: "horizontal",
+                        labelText: "{valueY}"
+                    }),
                 })
-            })
-        );
-
+            );
         //series.fills.template.setAll({ fillOpacity: 0.2, visible: true });
         series.strokes.template.setAll({ strokeWidth: 1 });
 
@@ -210,8 +210,8 @@ let count = 0;
     }));
 
     createAxisAndSeries(100, false);
-    createAxisAndSeries(1000, true);
-    createAxisAndSeries(8000, true);
+    createAxisAndSeries(100, true);
+    createAxisAndSeries(100, false);
 
 // Make stuff animate on load
 // https://www.amcharts.com/docs/v5/concepts/animations/

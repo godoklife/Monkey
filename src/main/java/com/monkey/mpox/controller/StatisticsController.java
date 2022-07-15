@@ -65,4 +65,15 @@ public class StatisticsController {
             System.out.println("전체데이터가져오기에러" + e);
         }
     }
+
+    @GetMapping("/testgetdata")
+    public void testgetdata(){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            response.getWriter().println(statisticsService.readjsonArrayFile());
+        }catch (Exception e){
+            System.out.println("전체데이터가져오기에러" + e);
+        }
+    }
 }

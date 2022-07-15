@@ -11,7 +11,7 @@ let endbtn=10;     // 페이징 버튼의 끝 번호
 let keyword=[];
 let sortingKey = "확진자"  // <-- value로 검색 후에도 정렬하기 위해 전역변수화, 페이지 실행 초기값 : 확진자 많은순 정렬
 
-
+chackM(); // 모바일확인 함수
 loadData(); // <--- 동기식 으로 설정되어있음
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 function runFunctions(){
@@ -236,7 +236,17 @@ function drawVisualization() {
 
 }
 
-
+/* 차트 만약의 모바일이라면 */
+function chackM() {
+    if($(window).width() < 768) { // 모바일크기라면
+        $(".daycharttitlte").addClass("daycharttitlte_m");
+    }else{
+        $(".daycharttitlte").removeClass("daycharttitlte_m");
+    }
+}
+$(window).resize(function() { // 사이즈변환 감지
+    chackM();
+});
 
 /*//전체 JSOND 확인 함수
 function getalldata(){
