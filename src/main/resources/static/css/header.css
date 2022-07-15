@@ -1,0 +1,21 @@
+.top_title{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+.top_board{
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 10px 0 10px 0;
+    font-size: 15px;
+    margin: 20px 0 20px 0;
+}
+.top_board_data1{
+    border-right: 3px solid black;
+}
+.top_board_data2{
+    border-right: 3px solid black;
+}
+.top_board_data3{
+    border-right: 3px solid black;
+}
