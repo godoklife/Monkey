@@ -1,5 +1,5 @@
 
-var root2;
+
 let jsondata // json 저장
 //데이터가져오기
 function getdataDate(){
@@ -12,7 +12,6 @@ function getdataDate(){
                 ordered[key] = jsonarray.data[key];
             });
             jsondata = ordered;
-            console.log(jsondata);
             /* let dataKeys = Object.keys(geochartArray['data']);
              for(let i=0; i< dataKeys.length; i++){
                  let datakey = dataKeys[i]
@@ -28,7 +27,6 @@ function getdataDate(){
         }
     });
 }
-
 // 차트
 am5.ready(function() {
     getdataDate(); // json 추출 함수 호출
@@ -150,7 +148,7 @@ function getchartdiv1(setno) {
 // Set data
     var data  = [];
 
-    if(setno == 1){
+    if(setno === 1){
         // 일별
         for(let i = 0; i < Object.keys(jsondata).length; i++){ // jsondata만큼반복
             // 날짜 분리
@@ -163,7 +161,7 @@ function getchartdiv1(setno) {
             for(let j = 0 ; j < datevnum; j++){
                 datevalu += jsondata[datea][Object.keys(jsondata[datea])[j]]["1"]["확진자"];
             }
-            if(i == Object.keys(jsondata).length - 1){
+            if(i === Object.keys(jsondata).length - 1){
                 data[i] = { date : new Date(datea).getTime()
                     , value : datevalu
                     ,bullet: true};
@@ -172,7 +170,7 @@ function getchartdiv1(setno) {
                     , value : datevalu};
             }
         }
-    }else if(setno == 2){
+    }else if(setno === 2){  // 월별
 
         let month = [];
         let monthobject = [];
@@ -180,7 +178,7 @@ function getchartdiv1(setno) {
         for(let i = 0; i < Object.keys(jsondata).length; i++) { // jsondata만큼반복
             let datesd = Object.keys(jsondata)[i]; // key 날짜
             let monthnum = new Date(datesd).getMonth();
-            if(month.indexOf(monthnum) == -1){// 해당 달이 배열의 없다면
+            if(month.indexOf(monthnum) === -1){// 해당 달이 배열의 없다면
                 month.push(monthnum);
             }
         }
@@ -192,7 +190,7 @@ function getchartdiv1(setno) {
             for(let j = 0; j < Object.keys(jsondata).length ; j++){ // 데이터길이만큼 반복
                 let datea = Object.keys(jsondata)[j]; // key 날짜
                 let monthnum = new Date(Object.keys(jsondata)[j]).getMonth();// 해당월 구하기
-                if(month[i] == monthnum){ // 해당월이라면
+                if(month[i] === monthnum){ // 해당월이라면
                     for(let z = 0 ; z <  Object.keys(jsondata[datea]).length; z++){
                         daydate += jsondata[datea][Object.keys(jsondata[datea])[z]]["1"]["확진자"];
                         year = new Date(datea).getFullYear();
@@ -204,7 +202,11 @@ function getchartdiv1(setno) {
             monthobject.push(newob);
         }
         for(let i = 0; i < monthobject.length ; i++){
-            if(i == monthobject.length - 1){
+            console.log(Object.keys(monthobject[i]))
+            console.log(new Date(Object.keys(monthobject[i])).getTime());
+            console.log(monthobject[i]);
+            if(i === monthobject.length - 1){
+
                 data[i] = { date : new Date(Object.keys(monthobject[i])).getTime(),
                     value : monthobject[i][Object.keys(monthobject[i])]
                     ,bullet : true};
@@ -214,13 +216,14 @@ function getchartdiv1(setno) {
             }
 
         }
-    }else {// 주별 띠발
+    }else {// 주별
 
 
         let weekdate = []; // 주차별 데이터
-        let 하시발 = [];
+        let datelist = [];
         let tempcount = 0;
         // 주차 구하기
+
         let year = 2022;
         let week = 0;
         for(let i = 0 ; i < Object.keys(jsondata).length; i++){ // 데이터 길이만큼 반복
@@ -243,8 +246,8 @@ function getchartdiv1(setno) {
                 for(let j = 0 ; j < datevnum ; j++){ // 해당일 확진자 반복문
                     tempcount += jsondata[date][Object.keys(jsondata[date])[j]]["1"]["확진자"]; //
                 }
-                하시발.push(Object.keys(jsondata)[i]);
-                console.log(하시발);
+                datelist.push(Object.keys(jsondata)[i]);
+                console.log(datelist);
                 weekdate.push({ [new Date(date).getFullYear() +"-"+ new Date(date).getWeek()] : tempcount} ); // 배열추가
             }
             year = new Date(date).getFullYear();
@@ -255,13 +258,13 @@ function getchartdiv1(setno) {
         for(let i = 0 ; i < weekdate.length ; i ++){
             if(i == weekdate.length - 1){
                 data[i] = {
-                    date : new Date(하시발[i]).getTime(),
+                    date : new Date(datelist[i]).getTime(),
                     value : weekdate[i][Object.keys(weekdate[i])],
                     bullet : true
                 };
             }else{
                 data[i] = {
-                    date : new Date(하시발[i]).getTime(),
+                    date : new Date(datelist[i]).getTime(),
                     value : weekdate[i][Object.keys(weekdate[i])],
                 };
             }

@@ -1,8 +1,8 @@
 let continent = new Object();
-/*gettravel(); // 처음시작 함수 호출*/
+gettravel(); // 처음시작 함수 호출
 startview(); // 처음시작하면 이 무엇인지
 //JSON 가져오기 함수
-/*function gettravel(){
+function gettravel(){
     $.ajax({
         url:"/travel/gettravel",
         method:"GET",
@@ -11,7 +11,7 @@ startview(); // 처음시작하면 이 무엇인지
             division(re);
         }
     });
-}*/
+}
 
 //분류 함수
 function division(re){
