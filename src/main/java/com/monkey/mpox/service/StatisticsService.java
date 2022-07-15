@@ -417,6 +417,7 @@ public class StatisticsService {
         // [ { 코드 : KR , 국가명 : 대한민국 , 확진자 : 10 }  ,
         //   { 코드 : CN , 국가명 : 중국 , 확진자 : 10,000 } ]
         int totalConfirmed = 0; // 총 확진자수
+        int totalSuspected = 0; // 총 유증상자수
         JSONArray jsonArray = new JSONArray();
 
         TreeSet<String> set = new TreeSet<>();// 중복값 걸러내기용
