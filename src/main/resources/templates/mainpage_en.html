@@ -1,126 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MONKEYPOX LIVE</title>
+    <!-- 부트스트랩 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 폰트어썸 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+
+
+<!--    <link href="/css/style.css" rel="stylesheet">-->
     <link href="/css/language.css" rel="stylesheet">
     <link href="/css/integrated.css" rel="stylesheet">
     <link href="/css/mpinfo.css" rel="stylesheet">
     <link href="/css/travel.css" rel="stylesheet">
     <link href="/css/news.css" rel="stylesheet">
     <link href="/css/design.css" rel="stylesheet">
+    <link href="/css/mainpage.css" rel="stylesheet">
+    <link href="/css/header.css" rel="stylesheet">
+
 </head>
 <body>
 
-
 <div class="container">
-    <select id="languageselectbox" name="languageselectbox" onchange="chageLangSelect()">
-        <option class="language" value="ko">language</option>
-        <option class="language" value="ko">한국어</option>
-        <option class="language" value="en">English</option>
-        <option class="language" value="zh">中文</option>
-        <option class="language" value="ja">日本語</option>
-    </select>
-   <span class="design_title">MonkeyPox LIVE</span>
-
+    <!-- Example single danger button -->
+    <div class="btn-group languageselectbox">
+        <button type="button" class="btn btn-secondary dropdown-toggle languagebtn" data-bs-toggle="dropdown" aria-expanded="false">
+            Language
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/" >한국어</a></li>
+            <li><a class="dropdown-item" href="/en">English</a></li>
+            <li><a class="dropdown-item" href="/zh">中文</a></li>
+            <li><a class="dropdown-item" href="/ja">日本語</a></li>
+        </ul>
+    </div>
     <div class="row">
-        <div id="mappages" class="container">
-            <h3><span class="title_text">World</span></h3><br>
-            <div class="row">
-
-                <div>
-                    <div id="regions_div"></div>
-                    <div id="totalconfirmed_div"></div>
-                    <h3 class="my-3"> Daily Confirmed Cases Worldwide </h3>
-                    <div id="chartdiv" class="my-3"></div>
-                    <div>
-                        <table id="totaltable" class="table">
-                        </table>
-                        <ul id="pagebtnbox" class="pagination justify-content-center my-2"></ul>
+<!--        <div th:replace="header.html::header"></div>-->
+        <div id="mappages" class="container containerPadding">
+            <div class="col-sm-8 offset-2">
+                <p class="top_title">MonkeyPoxLive</p>
+                <div class="top_board dashboard row">
+                    <div class="top_board_data1 col-sm-3 text-center">
+                        <p>Confirmed Cases Worldwide</p>
+                        <p id="top_board_confirmed">123</p>
+                    </div>
+                    <div class="top_board_data2 col-sm-3 text-center">
+                        <p>Symptomatic Worldwide</p>
+                        <p id="top_board_suspected">123</p>
+                    </div>
+                    <div class="top_board_data3 col-sm-3 text-center">
+                        <p>Origin</p>
+                        <p id="top_board_country">123</p>
+                    </div>
+                    <div class="top_board_data4 col-sm-3 text-center">
+                        <p>Domestic confirmed cases</p>
+                        <p id="top_board_korean">123</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div id="newspage" class="col-sm-8 offset-2 my-3">
+            <h3><span class="title_text">World</span></h3><br>
+            <div class="row">
+                <!--        <div class="col-sm-2">-->
+                <!--            <div id="entityPickerDiv">-->
+                <!--                <input type="text" placeholder="국가명 입력">-->
+                <!--                <div id="entity-container">-->
+                <!--                    &lt;!&ndash; js에서 생성 &ndash;&gt;-->
+                <!--                </div>-->
+                <!--            </div>-->
+                <!--        </div>-->
+                <div>
+                    <div id="regions_div"></div>
+
+                    <div style="margin-top: 50px"> <!-- 메인 첫번째 차트 marging [ 임시 ]-->
+                        <div class="div1_titles">
+                            <div class="div1_select btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <input onclick="setchartdiv1(1)" type="radio" class="btn-check" name="btnradio_1" id="btnradio1_1" autocomplete="off" checked>
+                                <label  class="btn btn-outline-primary" for="btnradio1_1">daily</label>
+
+                                <input onclick="setchartdiv1(3)" type="radio" class="btn-check" name="btnradio_1" id="btnradio1_2" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio1_2">weekly</label>
+
+                                <input onclick="setchartdiv1(2)" type="radio" class="btn-check" name="btnradio_1" id="btnradio1_3" autocomplete="off">
+                                <label class="btn btn-outline-primary" for="btnradio1_3">monthly</label>
+                            </div>
+
+                            <h3 id="daycharttitlte" class="daycharttitlte"> Confirmed Cases Worldwide </h3>
+                        </div>
+                        <div id="chartdiv"></div>
+                    </div>
+
+                    <div style="margin-top: 30px"> <!-- 메인 두번째 차트 marging [ 임시 ]-->
+                        <div class="div2_titles">
+                            <div class="btn-group div2_select" role="group" aria-label="Basic radio toggle button group">
+                                <input onclick="setchartnum(5)" type="radio" class="btn-check" name="btnradio_2" id="btnradio2_1" autocomplete="off" checked>
+                                <label id="" class="btn btn-outline-primary" for="btnradio2_1">5</label>
+
+                                <input type="radio" class="btn-check" name="btnradio_2" id="btnradio2_2" autocomplete="off">
+                                <label onclick="setchartnum(10)" class="btn btn-outline-primary" for="btnradio2_2">10</label>
+
+                                <input type="radio" class="btn-check" name="btnradio_2" id="btnradio2_3" autocomplete="off">
+                                <label onclick="setchartnum(15)" class="btn btn-outline-primary" for="btnradio2_3">15</label>
+
+                                <input type="radio" class="btn-check" name="btnradio_2" id="btnradio2_4" autocomplete="off">
+                                <label onclick="setchartnum(-1)" class="btn btn-outline-primary" for="btnradio2_4">view all</label>
+                            </div>
+                            <h3 class="daycharttitlte"> by country </h3>
+                        </div>
+                        <div id="chartdiv2"></div>
+                    </div>
+
+                    <div id="totalconfirmed_div"></div>
+                    <div>
+                        <table id="totaltable" class="table">
+
+                        </table>
+                        <ul id="pagebtnbox" class="pagination justify-content-center"></ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="newspage" class="containerPadding">
             <h3><span class="title_text">Real-time News</span></h3>
             <h5> Move by clicking on the title </h5>
             <div id="newstable"></div>
         </div>
-
-        <span class="mpinfo_title text-center">What is Monkeypox?</span>
-        <div class="row my-3">
-            <div class="col-sm-8 offset-2">
-                <div class="text-center top_menu">
-                    <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" data-bs-toggle="tab" type="button" role="tab" aria-selected="true" onclick="info()">Related Information</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link"  data-bs-toggle="tab" type="button" role="tab"  aria-selected="false" onclick="main_symptoms()">Main Symptoms</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" onclick="cure()">Cure</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" onclick="preventive()">Preventive</button>
-                        </li>
-                    </ul>
+        <div class="container containerPadding" id="infopage">
+            <div class="row">
+                <div>
+                    <div class="text-center top_menu">
+                        <span class="mpinfo_title">What is Monkeypox?</span>
+                        <ul class="nav nav-tabs text-center" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" data-bs-toggle="tab" type="button" role="tab" aria-selected="true" onclick="info()">Related Information</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link"  data-bs-toggle="tab" type="button" role="tab"  aria-selected="false" onclick="main_symptoms()">Main Symptoms</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" onclick="cure()">Cure</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" data-bs-toggle="tab" type="button" role="tab" aria-selected="false" onclick="preventive()">Preventive</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <br><br>
+                    <div id="contentbox"></div>
+                    <a href="https://kdca.go.kr/contents.es?mid=a20108010000">Source : Korea Centers for Disease Control and Prevention </a>
                 </div>
-                <br><br>
-                <div id="contentbox"></div>
             </div>
         </div>
-
-
-
-        <h3><span class="title_text text-center">Travel Restrictions</span></h3>
-        <div class="col-sm-8 offset-2 my-3 border rounded border-2 container g-0" style="" id="contentdiv">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <h3 class="title"> 여행자제(<span style="color: #FCC33C">2단계</span>) </h3>
-                    <ul class="" id="reserve"></ul>
+        <div class="container sidediv">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3> Cumulative confirmed cases in Korea </h3>
+                    <div id="chartdiv3"></div>
                 </div>
-                <div class="col-md-4">
-                    <h3 class="title"> 출국권고(<span style="color: #C82613">3단계</span>) </h3>
-                    <ul id="suasion"></ul>
-                </div>
-                <div class="col-md-4">
-                    <h3 class="title"> 여행금지(<span style="color: #9980DC">4단계</span>)</h3>
-                    <ul id="prohibition"></ul>
+                <div class="col-sm-6">
+                    <h3> Cumulative confirmed cases in top 3 countries </h3>
+                    <div id="chartdiv4"></div>
+                    <div id="colortext"></div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<div th:replace="footer.html::footer"></div>
+
 <div class="sidebar" id="floatMenu">
     <div id="list-example" class="list-group">
         <button class="list-group-item list-group-item-action" onclick="pagemove('mappages')">World</button>
         <button class="list-group-item list-group-item-action" onclick="pagemove('newspage')">Related news</button>
         <button class="list-group-item list-group-item-action" onclick="pagemove('infopage')">What is Monkeypox?</button>
-        <button class="list-group-item list-group-item-action" onclick="pagemove('contentdiv')">Travel Restrictions</button>
+        <button class="list-group-item list-group-item-action" onclick="show_trollbox()">
+            <i class="fa-solid fa-comments"></i> Anonymous chat room
+        </button>
+    </div>
+</div>
+
+<div class="container containerPadding">
+    <div class="footer" style="background-color: #fff">
+        <span>
+            <p class="footer_text">Help with server costs</p><a></a>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              account support
+            </button>
+            <p class="footer_text"> <a style="color: black;" href="https://github.com/godoklife/Monkey">MonkeyPoxLive Git Address</a></p>
+            <br>
+            <p class="footer_text">We receive a report by email & a request for correction of incorrect information.</p>
+            <br>
+           <p class="textsmall">*Caution: Statistical figures provided on this site are updated based on press releases from the Korea Centers for Disease Control and Prevention and related ministries around the world, domestic and foreign media articles, etc.
+             Since it is a personal collection, we cannot be held responsible for the accuracy of the figures and cannot be used as official evidence. The citation and use of the content provided on this site rests solely with the citer and the user.</p>
+        </span>
+    </div>
+</div>
+
+<div id="trollbox">
+    <div id="countpeoplediv">
+        <span>접속 인원수 : *명</span>
+    </div>
+    <ul id="msgdiv">
+        <!-- 메시지 송수신 출력부 -->
+        <li class="message">
+            <div class="messageWrap">
+                <span class="author">작성자</span>
+                <span class="message">메시지 출력</span>
+            </div>
+            <div class="dateWrap">
+                <span class="datetime">시간표시</span>
+            </div>
+        </li>
+    </ul>
+    <div id="msginputdiv">
+        <!-- 메시지 내용 입력부 -->
+        <input type="text" id="msg">
+        <button id="btnMsgSend"> Send </button>
     </div>
 </div>
 
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Help with server costs</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                신한 110-436-907901 박민욱<br>
+                <i class="fa-brands fa-bitcoin"></i><br>
+                <i class="fa-brands fa-ethereum"></i><br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+
+
+<!-- 차트js.cdn -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script src="/js/jquery-3.6.0.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="/js/english/mpinfo_en.js"></script>
-<script src="/js/ennews.js"></script>
-<!--<script src="/js/travel.js"></script>-->
-<script src="/js/english/chart_en.js"></script>
-<script src="/js/mainpage.js"></script>
+<!--라인차트 관련 js -->
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<!--부트스트랩 js -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/js/english/mpinfo_en.js"></script>
+<script src="/js/english/ennews.js"></script>
+<script src="/js/english/chart_en.js"></script>
+
+<!--라인차트 불러오는 js-->
 <script src="/js/english/linegraph_en.js"></script>
+<!-- 막대 차트 js-->
+<script src="/js/sortbarchart.js"></script>
+<script src="/js/sidechart.js"></script>
+<script src="/js/mainpage.js"></script>
 </body>
 </html>

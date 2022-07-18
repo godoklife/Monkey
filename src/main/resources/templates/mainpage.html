@@ -23,14 +23,18 @@
 <body>
 
 <div class="container">
-    <select id="languageselectbox" name="languageselectbox" onchange="chageLangSelect()">
-        <option class="language" value="ko">language</option>
-        <option class="language" value="ko">한국어</option>
-        <option class="language" value="en">English</option>
-        <option class="language" value="zh">中文</option>
-        <option class="language" value="ja">日本語</option>
-    </select>
-   <span class="design_title">MonkeyPox LIVE</span>
+    <!-- Example single danger button -->
+    <div class="btn-group languageselectbox">
+        <button type="button" class="btn btn-secondary dropdown-toggle languagebtn" data-bs-toggle="dropdown" aria-expanded="false">
+            Language
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/" >한국어</a></li>
+            <li><a class="dropdown-item" href="/en">English</a></li>
+            <li><a class="dropdown-item" href="/zh">中文</a></li>
+            <li><a class="dropdown-item" href="/ja">日本語</a></li>
+        </ul>
+    </div>
     <div class="row">
 <!--        <div th:replace="header.html::header"></div>-->
         <div th:replace="chart.html::chart"></div>

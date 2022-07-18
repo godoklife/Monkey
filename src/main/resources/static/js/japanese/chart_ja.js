@@ -11,9 +11,8 @@ let endbtn=10;     // 페이징 버튼의 끝 번호
 let keyword=[];
 let sortingKey = "확진자"  // <-- value로 검색 후에도 정렬하기 위해 전역변수화, 페이지 실행 초기값 : 확진자 많은순 정렬
 
-
+checkM(); // 모바일확인 함수
 loadData(); // <--- 동기식 으로 설정되어있음
-
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 function runFunctions(){
 // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로임;;
@@ -22,7 +21,6 @@ function runFunctions(){
     getTable();
       // <-- 브라우저 크기 변경시 구글맵 다시 로드(리사이징 위해서)
     showHeader();
-
 }
 
 function runGoogleChart(){
@@ -38,7 +36,7 @@ function showHeader(){
     let korean=0;
 
     for(let i=0; i<geochartArray.length-1; i++) {
-        if(geochartArray[i]['국가명']!=='United States'){
+        if(geochartArray[i]['국가명']!=='日本'){
             if(geochartArray[i]['확진자']!==0) {
                 confirmed += geochartArray[i]['확진자'];
             }
@@ -53,10 +51,10 @@ function showHeader(){
     }
     confirmed+=korean;
 
-    let htmlConfirmed= confirmed+" person";
-    let htmlSuspected= suspected+" person";
-    let htmlCountry= (geochartArray.length-1) +" country";
-    let htmlKorean= korean+" person";
+    let htmlConfirmed= confirmed+" 人";
+    let htmlSuspected= suspected+" 人";
+    let htmlCountry= (geochartArray.length-1) +" カ国";
+    let htmlKorean= korean+" 人";
 
     $('#top_board_confirmed').html(htmlConfirmed);
     $('#top_board_suspected').html(htmlSuspected);
@@ -65,49 +63,20 @@ function showHeader(){
 
 }
 
-
 // 페이지 로드시 차트 실행에 필요한 json 파일처리& 메모리 적재
 function loadData(){
     $.ajax({
         url:'/statistics/loaddata',
-        data : {"language" : "en"},
+        data : {"language" : "ja"},
         method:'get',
         async:false,
         success:function (args) {
             if(args===false){
-                alert('Error loading data');
+                alert('データの読み込みエラー');
             }
         }
     });
 }
-
-// function getTable(){
-//     $.ajax({
-//         url:'/statistics/viewgeo',
-//         data:{},
-//         method:'GET',
-//         success:function (jsonObject){
-//             console.log(jsonObject);
-//             let entity='';
-//             for(let i=0; i<jsonObject['발병국가수'];i++){
-//                 let countryName = jsonObject['발병국명단'][0][i];
-//                 if(countryName.includes(' ')){
-//                     countryName = jsonObject['발병국명단'][0][i].replace(' ', '&nbsp;');
-//                 }
-//                 entity+='<div>' +
-//                     '<input type="checkbox" id="chk'+jsonObject["발병국명단"][0][i]+'" ' +
-//                     'onclick=chkcheckbox("'+jsonObject["발병국명단"][0][i]+'")>' +
-//                     '<span> '+jsonObject["발병국명단"][0][i]+' </span>' +
-//                     '</div>';
-//             }
-//             $("#entity-container").html(entity);
-//         },
-//         error:function (err){
-//             console.log(err);
-//             alert("잠시후 다시 시도해주세요 : 코드 똑바로 짜시오.")
-//         }
-//     });
-// }
 
 function getTable(){
 
@@ -145,13 +114,10 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
     }else{
         totalpage = Math.ceil((keyword.length/size));
     }
-
-    console.log(keyword)
     showTable(page);
 }
 
 // 정렬
-
 function showTable(index){  // 페이징처리
     // 페이지 기본값 : 확진자 많은 순으로 정렬
     geochartArray.sort(function (a, b){
@@ -168,10 +134,10 @@ function showTable(index){  // 페이징처리
 
     let tablecode = '<tr>\n' +
         '                        <th> </th>\n' +
-        '                        <th>Country</th>\n' +
-        '                        <th>Confirmed</th>\n' +
-        '                        <th>Symptoms</th>\n' +
-        '                        <th>Percentage(%)</th>\n' +
+        '                        <th>国</th>\n' +
+        '                        <th>確定者</th>\n' +
+        '                        <th>遺症ボックス</th>\n' +
+        '                        <th>比率(%)</th>\n' +
         '                    </tr>';
     if(keyword===undefined || keyword.length===0){
         for(let i=0; i<geochartArray.length-1; i++){    // 가장 마지막 인덱스에는 총확진자밖에 안들어있음.
@@ -215,9 +181,9 @@ function showTable(index){  // 페이징처리
 
     ////////////////////////// 이전 버튼 /////////////////////////////////////////////
     if(page==1){    // 현재 페이지가 첫페이지이면
-        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">Previous</button> </li>';
+        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">以前</button> </li>';
     }else{  // 현재페이지가 첫페이지가 아니면
-        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">Previous</button> </li>';
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page-1)+')">以前</button> </li>';
     }
     ////////////////////////////////////////////////////////////////////////////////
     for(let i = startbtn; i <= endbtn; i++) {
@@ -230,9 +196,9 @@ function showTable(index){  // 페이징처리
     }
     ////////////////////////// 다음 버튼 ///////////////////////////////////////////////////
     if(page==totalpage || totalpage == 0){
-        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page)+')">Next</button> </li>';
+        pagehtml += '<li class="page-item disabled"><button class="page-link" type="button" onclick="showTable('+(page)+')">次</button> </li>';
     }else{
-        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page+1)+')">Next</button> </li>';
+        pagehtml += '<li class="page-item"><button class="page-link" type="button" onclick="showTable('+(page+1)+')">次</button> </li>';
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -249,12 +215,11 @@ function getGeoChartData(){
         success:function (jsonArray){
             geochartArray = jsonArray;
             totalpage = Math.ceil((geochartArray.length/size));
-            console.log(geochartArray);
             runFunctions();
         },
         error:function (err){
             console.log(err);
-            alert("Please try again later")
+            alert("しばらくしてからもう一度お試しください")
         }
     });
 }
@@ -273,12 +238,12 @@ function drawVisualization() {
 
     for(let i=0; i<geochartArray.length; i++){
         data.addRows([[{v:geochartArray[i]['ISO'],f:geochartArray[i]['국가명']},
-            geochartArray[i]['확진자'],'Confirmed : '+geochartArray[i]['확진자']+'\n' +
-            'Symptoms : '+geochartArray[i]['유증상자']+'']]);
-        ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
+            geochartArray[i]['확진자'],'確定者 : '+geochartArray[i]['확진자']+'\n' +
+            '遺症ボックス : '+geochartArray[i]['유증상자']+'']]);
+        // ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
         if(i===geochartArray.length-1){
             totalconfirmed = geochartArray[i]['확진자총합'];
-            let code='<span>number of confirmed cases worldwide : '+totalconfirmed+'</span>';
+            let code='<span>今日の世界の確定者数 : '+totalconfirmed+'</span>';
             $('#totalconfirmed_div').html(code);
         }
     }
@@ -288,24 +253,35 @@ function drawVisualization() {
         colorAxis: {
             colors:['#ffe1e1','#750000']
         },
-        defaultColor:'#c0ffab'
-
+        defaultColor:'#c0ffab',
+        keepAspectRatio:true,
+        width:document.getElementById('regions_div').clientWidth
     };
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-    // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.
-    google.visualization.events.addListener(chart, 'select', function() {
-        var selection = chart.getSelection();
-        if (selection.length == 1) {
-            var selectedRow = selection[0].row;
-            var selectedRegion = data.getValue(selectedRow, 0);
-            if(ivalue[selectedRegion] != '') { window.open(ivalue[selectedRegion]);  }
-        }
-    });
+    // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.    ->> 모바일에서 컨트롤하기 힘듬. 삭제
+    // google.visualization.events.addListener(chart, 'select', function() {
+    //     var selection = chart.getSelection();
+    //     if (selection.length == 1) {
+    //         var selectedRow = selection[0].row;
+    //         var selectedRegion = data.getValue(selectedRow, 0);
+    //         if(ivalue[selectedRegion] != '') { window.open(ivalue[selectedRegion]);  }
+    //     }
+    // });
     chart.draw(data, options);
 
 }
 
-
+/* 차트 만약의 모바일이라면 */
+function checkM() {
+    if($(window).width() < 768) { // 모바일크기라면
+        $(".daycharttitlte").addClass("daycharttitlte_m");
+    }else{
+        $(".daycharttitlte").removeClass("daycharttitlte_m");
+    }
+}
+$(window).resize(function() { // 사이즈변환 감지
+    checkM();
+});
 
 /*//전체 JSOND 확인 함수
 function getalldata(){

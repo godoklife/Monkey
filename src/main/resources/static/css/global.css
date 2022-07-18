@@ -9,9 +9,13 @@
 
 .list-group, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr,
 address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var,
-b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot,
+b, i, dl, dt, dd, ol, fieldset, form, label, legend, table, caption, tbody, tfoot,
 thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer, header,
-hgroup, menu, nav, section, summary, time, mark, audio, video:not(.languageselectbox){
+hgroup, menu, nav, section, summary, time, mark, audio, video{
+    font-family: 'OTWelcomeRA';
+}
+
+#infopage ul, #infopage li{
     font-family: 'OTWelcomeRA';
 }
 
@@ -47,4 +51,17 @@ hgroup, menu, nav, section, summary, time, mark, audio, video {
 .container{
     background-color: #FFFFFF;
     border-bottom: solid 3px #bbb;
+}
+
+.dropdown-item{
+    font-size: 16px;
+}
+
+.languagebtn{
+    font-weight: bold;
+}
+
+.languageselectbox{
+    float: right;
+    margin-top: 20px;
 }
