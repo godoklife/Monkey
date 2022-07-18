@@ -29,7 +29,7 @@ $(document).ready(function (){
 
     // 2. JS에서 제동하는 websocket 클래스 사용하기
         // 1) [/ws/chat] 해당 URL로 소켓 연결
-    let websocket = new WebSocket('ws://localhost:80/ws/chat');
+    let websocket = new WebSocket('wss://localhost/ws/chat');
 
     websocket.onmessage = onMessage;
     websocket.onopen = onOpen;
@@ -46,8 +46,12 @@ $(document).ready(function (){
     // 5. 메시지 전송
     function send(){
         let msg = $('#msg').val();
+
+        if(msg==='' || msg==='\n')return;   // 내용이 없는 경우 실행치않음
+
         websocket.send(username+':'+msg);
         $('#msg').val('');
+        $('#msg').focus();
     }
     // 6. 메시지 수신
     function onMessage(msg){
