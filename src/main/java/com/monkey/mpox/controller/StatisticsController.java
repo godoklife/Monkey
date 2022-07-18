@@ -24,6 +24,7 @@ public class StatisticsController {
 
     @GetMapping("/loaddata")    // 모든 데이타들 메모리에 올리기
     public boolean loaddata(@RequestParam String language){
+        statisticsService.selectlanguage();
         return statisticsService.loadData(language);
     }
 
