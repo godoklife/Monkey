@@ -57,4 +57,19 @@ public class NewsController {
         }
     }
 
+    /*    @GetMapping("/getyoutubeurl") 대기
+    public String getyoutubeur(HttpServletResponse response){
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            *//*response.getWriter().print(newsService.getyoutubeurl());*//*
+            String temp = newsService.getyoutubeurl();
+            return temp;
+        }catch (Exception e) {
+            System.out.println("con에러" + e);
+        }
+        return null;
+    }
+    */
+
 }

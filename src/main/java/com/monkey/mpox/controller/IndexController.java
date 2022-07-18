@@ -47,4 +47,9 @@ public class IndexController {
     @GetMapping("/footer")
     public String footer(){return "footer";}
 
+    @GetMapping("/trollbox")
+    public String trollbox(){
+        return "trollbox";
+    }
+
 }

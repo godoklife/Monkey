@@ -15,11 +15,13 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'          // Spring Security
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'org.json', name: 'json', version: '20220320'             // JSON
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.15.1'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'         // 웹소켓 라이브러리
 // 이하 테스트용 dependencies'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

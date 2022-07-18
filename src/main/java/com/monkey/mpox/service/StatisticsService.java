@@ -36,9 +36,9 @@ public class StatisticsService {
 
     public boolean loadData(String language){
 
-//        boolean flag1 = getjsonFromServer();
+        boolean flag1 = getjsonFromServer();
             // @@@@@@@@@@@ 나중에 다시 열어놓을것, 반복적으로 다운로드하면 혼날까봐 잠깐 막음 @@@@@@@@@@@
-        boolean flag1 = true;
+//        boolean flag1 = true;
         boolean flag2 = putCommonChartDataList(language);
 
         if(flag1 && flag2)
@@ -116,7 +116,6 @@ public class StatisticsService {
             bis.close();
             fis.close();
             JSONArray jsonArray = new JSONArray(new String(bytes));
-
             return jsonArray;
         }catch (Exception e){System.out.println("readJsonFile()_exception : "+e);}
 
@@ -336,7 +335,7 @@ public class StatisticsService {
                             메모리.get("data").get(date).get(iso).get(2).put("유증상자" , i1+1 );
                             totalsuspected++;
                         }
-                        
+
                     }else {
                         코드명 = new HashMap<>();   // isocode2 : value 를 담을 map
 
@@ -418,6 +417,7 @@ public class StatisticsService {
         // [ { 코드 : KR , 국가명 : 대한민국 , 확진자 : 10 }  ,
         //   { 코드 : CN , 국가명 : 중국 , 확진자 : 10,000 } ]
         int totalConfirmed = 0; // 총 확진자수
+        int totalSuspected = 0; // 총 유증상자수
         JSONArray jsonArray = new JSONArray();
 
         TreeSet<String> set = new TreeSet<>();// 중복값 걸러내기용

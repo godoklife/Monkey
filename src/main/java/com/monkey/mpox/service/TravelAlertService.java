@@ -16,6 +16,7 @@ public class TravelAlertService {
         try {
             //키값
             String key = "DQP%2FRXHwbnss9z6uetsFIxyUiC3xGjYC9cbN5y8eOsTadE1xaSfv23sLcDyjJj85EwAQtLwV7%2B%2FB4jVCC%2FSraQ%3D%3D";
+
             // JSON 가져오기
             URL url = new URL("http://apis.data.go.kr/1262000/TravelAlarmService2/getTravelAlarmList2?serviceKey="+key+"&numOfRows=200");
             // UTF-8로 openStrieam해서 읽어오기
@@ -24,7 +25,7 @@ public class TravelAlertService {
             JSONObject object = new JSONObject(result); // JOSN확인
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             JSONArray jsonArray = object.getJSONArray("data"); // object 안 data 리스트로 뽑기
-
+            
             return object;
         }catch (Exception e){
             System.out.println("JSON 읽어오기 실패: " + e );

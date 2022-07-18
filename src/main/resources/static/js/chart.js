@@ -11,7 +11,7 @@ let endbtn=10;     // 페이징 버튼의 끝 번호
 let keyword=[];
 let sortingKey = "확진자"  // <-- value로 검색 후에도 정렬하기 위해 전역변수화, 페이지 실행 초기값 : 확진자 많은순 정렬
 
-
+checkM(); // 모바일확인 함수
 loadData(); // <--- 동기식 으로 설정되어있음
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 function runFunctions(){
@@ -20,6 +20,7 @@ function runFunctions(){
     showTable(page);    // <-- 지오차트 바로 하단 테이블 출력
     getTable();
       // <-- 브라우저 크기 변경시 구글맵 다시 로드(리사이징 위해서)
+    showHeader();
 }
 
 function runGoogleChart(){
@@ -27,6 +28,40 @@ function runGoogleChart(){
     google.setOnLoadCallback(drawVisualization);
 }
 
+function showHeader(){
+
+    let confirmed=0;
+    let suspected=0;
+    let country=0;
+    let korean=0;
+
+    for(let i=0; i<geochartArray.length-1; i++) {
+        if(geochartArray[i]['국가명']!=='대한민국'){
+            if(geochartArray[i]['확진자']!==0) {
+                confirmed += geochartArray[i]['확진자'];
+            }
+            if (geochartArray[i]['유증상자']!==0){
+                suspected += geochartArray[i]['유증상자'];
+            }
+        }else{  // 한국인 확진자 집계
+            if(geochartArray[i]['확진자']!==0){
+                korean += geochartArray[i]['확진자'];
+            }
+        }
+    }
+    confirmed+=korean;
+
+    let htmlConfirmed= confirmed+" 명";
+    let htmlSuspected= suspected+" 명";
+    let htmlCountry= (geochartArray.length-1) +" 개국";
+    let htmlKorean= korean+" 명";
+
+    $('#top_board_confirmed').html(htmlConfirmed);
+    $('#top_board_suspected').html(htmlSuspected);
+    $('#top_board_country').html(htmlCountry);
+    $('#top_board_korean').html(htmlKorean);
+
+}
 
 // 페이지 로드시 차트 실행에 필요한 json 파일처리& 메모리 적재
 function loadData(){
@@ -205,7 +240,7 @@ function drawVisualization() {
         data.addRows([[{v:geochartArray[i]['ISO'],f:geochartArray[i]['국가명']},
             geochartArray[i]['확진자'],'확진자 : '+geochartArray[i]['확진자']+'\n' +
             '유증상자 : '+geochartArray[i]['유증상자']+'']]);
-        ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
+        // ivalue[geochartArray[i]['ISO']] = 'http://www.google.com';
         if(i===geochartArray.length-1){
             totalconfirmed = geochartArray[i]['확진자총합'];
             let code='<span>금일 전 세계 확진자 수 : '+totalconfirmed+'</span>';
@@ -223,20 +258,30 @@ function drawVisualization() {
         width:document.getElementById('regions_div').clientWidth
     };
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-    // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.
-    google.visualization.events.addListener(chart, 'select', function() {
-        var selection = chart.getSelection();
-        if (selection.length == 1) {
-            var selectedRow = selection[0].row;
-            var selectedRegion = data.getValue(selectedRow, 0);
-            if(ivalue[selectedRegion] != '') { window.open(ivalue[selectedRegion]);  }
-        }
-    });
+    // 이벤트 리스너, 클릭시 해당 지역의 ivalue 내의 링크 타고 들어가는 메소드.    ->> 모바일에서 컨트롤하기 힘듬. 삭제
+    // google.visualization.events.addListener(chart, 'select', function() {
+    //     var selection = chart.getSelection();
+    //     if (selection.length == 1) {
+    //         var selectedRow = selection[0].row;
+    //         var selectedRegion = data.getValue(selectedRow, 0);
+    //         if(ivalue[selectedRegion] != '') { window.open(ivalue[selectedRegion]);  }
+    //     }
+    // });
     chart.draw(data, options);
 
 }
 
-
+/* 차트 만약의 모바일이라면 */
+function checkM() {
+    if($(window).width() < 768) { // 모바일크기라면
+        $(".daycharttitlte").addClass("daycharttitlte_m");
+    }else{
+        $(".daycharttitlte").removeClass("daycharttitlte_m");
+    }
+}
+$(window).resize(function() { // 사이즈변환 감지
+    checkM();
+});
 
 /*//전체 JSOND 확인 함수
 function getalldata(){

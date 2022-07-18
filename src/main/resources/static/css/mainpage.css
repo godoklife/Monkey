@@ -1,0 +1,70 @@
+/*이하 채팅방 관련 CSS*/
+
+#msgdiv{
+    max-height: 100%;
+    max-width: 100%;
+    overflow-y: scroll;
+    /*IE에서 스크롤바 감추기*/
+    -ms-overflow-style: none;
+}
+#msgdiv::-webkit-scrollbar{ /* 웹킷 기반 브라우저에서 스크롤바 감추기 */
+    display: none;
+}
+
+#trollbox{
+    width: 0;
+    height: 0;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    background : linear-gradient(135deg, #abcef5, #edabff);
+}
+#countpeoplediv{
+    position: relative;
+}
+#trollbox ul{
+    list-style: none;
+    display: inline-grid;
+}
+#messageWrap{
+    position: relative;
+    display: inline-flex;
+    left: 0;
+    padding-right: 10px;
+}
+#dateWrap{
+    position: relative;
+    display: inline-block;
+    right: 0;
+    width: 70px;
+}
+
+.message{
+    display: inline-flex;
+}
+.message span{
+    word-break: break-all;
+}
+
+#msginputdiv{
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    padding: 10px 15px 15px 10px;
+}
+#msg{
+    width: 65%;
+    position: relative;
+    left: 0;
+}
+#btnMsgSend{
+    width: 25%;
+    position: relative;
+    right: 0;
+    background: linear-gradient(45deg, blueviolet, dodgerblue);
+    color: #fff;
+}
+
+
+/*채팅방 관련 CSS 끝*/
+

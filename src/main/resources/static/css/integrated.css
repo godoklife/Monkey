@@ -26,6 +26,11 @@
     width: 100%;
 }
 
+.daycharttitlte{
+    display: inline-block;
+    margin-left: 20px;
+}
+
 /* 가로막대정렬그래프 */
 #chartdiv2 {
     width: 100%;
@@ -45,6 +50,21 @@
 .sidediv{
     padding: 50px 0px;
 }
+.div1_titles, .div2_titles{ /* 상단 버튼및 제목 */
+    position: relative;
+    text-align: center;
+}
+.div1_select, .div2_select{ /* 상단 버튼및 제목 */
+    position: absolute;
+    left: 25px;
+    bottom: 5px;
+}
+.daycharttitlte_m{/*차트 제목 모바일버전 위치*/
+    position: absolute;
+    right: 25px;
+    bottom: 5px;
+}
+
 
 /*.entityPickerDiv{ 작동안함 */
 /*    max-height:900px;*/
