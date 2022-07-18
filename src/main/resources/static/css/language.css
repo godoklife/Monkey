@@ -60,6 +60,8 @@
 .languageselectbox{
     float: right;
     margin-top: 20px;
+    height: 36px;
+    width: 120px;
 }
 
 .containerPadding{

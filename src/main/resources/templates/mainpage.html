@@ -24,19 +24,19 @@
 
 <div class="container">
     <!-- Example single danger button -->
-    <div class="btn-group languageselectbox">
-        <button type="button" class="btn btn-secondary dropdown-toggle languagebtn" data-bs-toggle="dropdown" aria-expanded="false">
-            Language
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/" >한국어</a></li>
-            <li><a class="dropdown-item" href="/en">English</a></li>
-            <li><a class="dropdown-item" href="/zh">中文</a></li>
-            <li><a class="dropdown-item" href="/ja">日本語</a></li>
-        </ul>
-    </div>
+
     <div class="row">
-<!--        <div th:replace="header.html::header"></div>-->
+        <div class="btn-group languageselectbox">
+            <button type="button" class="btn btn-secondary dropdown-toggle languagebtn" data-bs-toggle="dropdown" aria-expanded="false">
+                Language
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/" >한국어</a></li>
+                <li><a class="dropdown-item" href="/en">English</a></li>
+                <li><a class="dropdown-item" href="/zh">中文</a></li>
+                <li><a class="dropdown-item" href="/ja">日本語</a></li>
+            </ul>
+        </div>
         <div th:replace="chart.html::chart"></div>
         <div th:replace="news.html::news"></div>
         <div th:replace="mpinfo.html::mpinfo"></div>
@@ -52,9 +52,9 @@
         <button class="list-group-item list-group-item-action" onclick="pagemove('newspage')">관련 뉴스</button>
         <button class="list-group-item list-group-item-action" onclick="pagemove('infopage')">원숭이 두창이란?</button>
         <button class="list-group-item list-group-item-action" onclick="pagemove('contentdiv')">여행 경보 단계</button>
-        <button class="list-group-item list-group-item-action" onclick="show_trollbox()">
-            <i class="fa-solid fa-comments"></i> 익명채팅방
-        </button>
+<!--        <button class="list-group-item list-group-item-action" onclick="show_trollbox()">-->
+<!--            <i class="fa-solid fa-comments"></i> 익명채팅방-->
+<!--        </button>-->
     </div>
 </div>
 

@@ -64,4 +64,6 @@ hgroup, menu, nav, section, summary, time, mark, audio, video {
 .languageselectbox{
     float: right;
     margin-top: 20px;
+    height: 36px;
+    width: 120px;
 }

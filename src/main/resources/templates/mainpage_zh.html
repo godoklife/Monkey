@@ -23,20 +23,18 @@
 <body>
 
 <div class="container">
-    <!-- Example single danger button -->
-    <div class="btn-group languageselectbox">
-        <button type="button" class="btn btn-secondary dropdown-toggle languagebtn" data-bs-toggle="dropdown" aria-expanded="false">
-            Language
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/" >한국어</a></li>
-            <li><a class="dropdown-item" href="/en">English</a></li>
-            <li><a class="dropdown-item" href="/zh">中文</a></li>
-            <li><a class="dropdown-item" href="/ja">日本語</a></li>
-        </ul>
-    </div>
     <div class="row">
-<!--        <div th:replace="header.html::header"></div>-->
+        <div class="btn-group languageselectbox">
+            <button type="button" class="btn btn-secondary dropdown-toggle languagebtn" data-bs-toggle="dropdown" aria-expanded="false">
+                Language
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/" >한국어</a></li>
+                <li><a class="dropdown-item" href="/en">English</a></li>
+                <li><a class="dropdown-item" href="/zh">中文</a></li>
+                <li><a class="dropdown-item" href="/ja">日本語</a></li>
+            </ul>
+        </div>
         <div id="mappages" class="container containerPadding">
             <div class="col-sm-8 offset-2">
                 <p class="top_title">MonkeyPoxLive</p>
@@ -177,9 +175,9 @@
         <button class="list-group-item list-group-item-action" onclick="pagemove('mappages')">全球事实</button>
         <button class="list-group-item list-group-item-action" onclick="pagemove('newspage')">相关新闻</button>
         <button class="list-group-item list-group-item-action" onclick="pagemove('infopage')">什么是猴痘？</button>
-        <button class="list-group-item list-group-item-action" onclick="show_trollbox()">
-            <i class="fa-solid fa-comments"></i> 匿名聊天空间
-        </button>
+<!--        <button class="list-group-item list-group-item-action" onclick="show_trollbox()">-->
+<!--            <i class="fa-solid fa-comments"></i> 匿名聊天空间-->
+<!--        </button>-->
     </div>
 </div>
 
