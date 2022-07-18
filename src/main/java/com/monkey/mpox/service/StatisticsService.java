@@ -37,14 +37,10 @@ public class StatisticsService {
     public boolean loadData(String language){
 
         boolean flag1 = getjsonFromServer();
-            // @@@@@@@@@@@ 나중에 다시 열어놓을것, 반복적으로 다운로드하면 혼날까봐 잠깐 막음 @@@@@@@@@@@
-//        boolean flag1 = true;
         boolean flag2 = putCommonChartDataList(language);
 
-        if(flag1 && flag2)
-            return true;
-        else
-            return false;
+        if(flag1 && flag2) return true;
+        else return false;
     }
 
     // json 파일을 서버로부터 다운로드 해오는 메소드
@@ -61,11 +57,7 @@ public class StatisticsService {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         String nowDate = dtf.format(LocalDate.now());
-        // todo: 배포할 때 경로 수정 요
 
-
-
-//        String dir = "C:\\Users\\XPS_15\\inteliJ.git\\mpox\\src\\main\\resources\\static\\json";
         try {
             File file = new File(dir,nowDate+".json");
             FileOutputStream fos =new FileOutputStream(file);
@@ -86,7 +78,6 @@ public class StatisticsService {
     // 2. JSONArray 형태로 변환 후 리턴
     public JSONArray readjsonArrayFile(){
         byte failCount=0;
-//        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json";
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
         String nowDate = dtf.format(LocalDate.now());
@@ -123,9 +114,6 @@ public class StatisticsService {
     }
     public JSONArray readjsonArrayFile(String jsonFileName){
 
-//        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
-
-
         File file = new File(dir+"/"+jsonFileName+".json");
         byte[] bytes = new byte[0];
         try {
@@ -142,10 +130,8 @@ public class StatisticsService {
 
         return jsonArray;
     }   // 삭제 ㄴㄴ 쓸곳있음 수도...
-    public JSONObject readjsonObjectFile(String jsonFileName){
 
-        // todo: 배포시 경로 변경 요
-//        String dir = "C:/Users/XPS_15/inteliJ.git/mpox/src/main/resources/static/json/";
+    public JSONObject readjsonObjectFile(String jsonFileName){
 
         File file = new File(dir+"/"+jsonFileName+".json");
         byte[] bytes = new byte[0];
@@ -216,7 +202,6 @@ public class StatisticsService {
 
     // 오늘의 json파일(파일명 형식:yyyyMMdd.json)을 해석해서 Dto에 저장
         // 현재 getww()가 호출시 getData()도 실행되는 구조임.
-        // :Todo 나중에 getData()는 일정시간마다->> 매 02시쯤? 실행되도록 @수정 필요
         // 22.06.30 00:55 json파일 읽는 시점에 파일이 없을경우 서버에서 불러오도록 로직 수정됨
     public void getData(){
         JSONArray todayjsonArray = readjsonArrayFile();
@@ -408,13 +393,10 @@ public class StatisticsService {
 
     public JSONArray getSortedByCountry(){
 
-
-
         // 만들고자 하는 json 형태
         // [ { 코드 : KR , 국가명 : 대한민국 , 확진자 : 10 }  ,
         //   { 코드 : CN , 국가명 : 중국 , 확진자 : 10,000 } ]
         int totalConfirmed = 0; // 총 확진자수
-        int totalSuspected = 0; // 총 유증상자수
         JSONArray jsonArray = new JSONArray();
 
         TreeSet<String> set = new TreeSet<>();// 중복값 걸러내기용
@@ -434,7 +416,6 @@ public class StatisticsService {
         }
 
         for (int i=0; i<commonChartDataList.size(); i++){
-            String date = commonChartDataList.get(i).getDate();
             String iso = commonChartDataList.get(i).getCountryISO2();
             String country = commonChartDataList.get(i).getCountry();
             String status = commonChartDataList.get(i).getStatus();
@@ -443,12 +424,13 @@ public class StatisticsService {
                     if(status.equals("confirmed")){ // 집어넣어야 할 데이타가 확진자인지 유증상자인지 구분 후
                         int tmp = jsonArray.getJSONObject(j).getInt("확진자");
                         jsonArray.getJSONObject(j).put("확진자",tmp+1);    // 카운트업
+                        totalConfirmed++;
                     }else if(status.equals("suspected")){
                         int tmp = jsonArray.getJSONObject(j).getInt("유증상자");
                         jsonArray.getJSONObject(j).put("유증상자",tmp+1);
                     }
                     jsonArray.getJSONObject(j).put("국가명",country);
-                    totalConfirmed++;
+//                    totalConfirmed++;
                 }
             }
         }
