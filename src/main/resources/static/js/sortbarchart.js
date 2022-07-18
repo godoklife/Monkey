@@ -15,7 +15,6 @@ function getGeoChartData(){
             })
         },
         error:function (err){
-            console.log(err);
             alert("잠시후 다시 시도해주세요 : 코드 똑바로 짜시오.")
         }
     });

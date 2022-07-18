@@ -202,9 +202,6 @@ function getchartdiv1(setno) {
             monthobject.push(newob);
         }
         for(let i = 0; i < monthobject.length ; i++){
-            console.log(Object.keys(monthobject[i]))
-            console.log(new Date(Object.keys(monthobject[i])).getTime());
-            console.log(monthobject[i]);
             if(i === monthobject.length - 1){
 
                 data[i] = { date : new Date(Object.keys(monthobject[i])).getTime(),
@@ -247,7 +244,6 @@ function getchartdiv1(setno) {
                     tempcount += jsondata[date][Object.keys(jsondata[date])[j]]["1"]["확진자"]; //
                 }
                 datelist.push(Object.keys(jsondata)[i]);
-                console.log(datelist);
                 weekdate.push({ [new Date(date).getFullYear() +"-"+ new Date(date).getWeek()] : tempcount} ); // 배열추가
             }
             year = new Date(date).getFullYear();

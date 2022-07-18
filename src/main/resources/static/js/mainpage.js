@@ -51,7 +51,6 @@ $(document).ready(function (){
     }
     // 6. 메시지 수신
     function onMessage(msg){
-        console.log(msg)
         let data = msg.data;    // 실제 표시해야 할 메시지 내용이 담긴 데이타
         let sender = data.split(':')[0];    // 보낸 사람
         let message = data.split(':')[1];   // 메시지 내용

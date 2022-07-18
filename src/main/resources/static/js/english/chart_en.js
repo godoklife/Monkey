@@ -16,7 +16,6 @@ loadData(); // <--- 동기식 으로 설정되어있음
 
 getGeoChartData();  // <--- ajax 로드 완료 후, runFunctions() 실행.
 function runFunctions(){
-console.log(geochartArray);
 // 구글지오차트 로드, 밖에 꺼내놓으니 비동기로딩때문에 먼저 로딩될때도 있고 지멋대로임;;
     runGoogleChart();
     showTable(page);    // <-- 지오차트 바로 하단 테이블 출력
@@ -147,7 +146,6 @@ function chkcheckbox(value){    // 체크박스에 체크된 / 언체크된 국�
         totalpage = Math.ceil((keyword.length/size));
     }
 
-    console.log(keyword)
     showTable(page);
 }
 
@@ -250,11 +248,9 @@ function getGeoChartData(){
         success:function (jsonArray){
             geochartArray = jsonArray;
             totalpage = Math.ceil((geochartArray.length/size));
-            console.log(geochartArray);
             runFunctions();
         },
         error:function (err){
-            console.log(err);
             alert("Please try again later")
         }
     });

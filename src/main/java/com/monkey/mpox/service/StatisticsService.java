@@ -176,12 +176,9 @@ public class StatisticsService {
             JSONArray todayjsonArray = readjsonArrayFile();
             JSONObject iso2Object = readjsonObjectFile("iso3toiso2");
             JSONObject languageobject = null;
-            System.out.println(language);
             if(language.equals("kr")){
-                System.out.println("한국어페이지");
                 languageobject = readjsonObjectFile("iso3tokorean");
             }else if(language.equals("en")){
-                System.out.println("영어페이지");
                 languageobject = readjsonObjectFile("iso3toenglish");
             }else if(language.equals("zh")){
                 languageobject = readjsonObjectFile("iso3tochinese");

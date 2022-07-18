@@ -218,7 +218,6 @@ function getGeoChartData(){
             runFunctions();
         },
         error:function (err){
-            console.log(err);
             alert("しばらくしてからもう一度お試しください")
         }
     });

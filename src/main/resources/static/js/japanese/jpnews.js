@@ -33,7 +33,6 @@ function startview() {
 //가로크기 변환되었을때 실행함수
 $(window).resize(function() {
     if($(window).width() < 768) {
-        console.log("gd");
         $(".title").addClass("rounded");
         $(".title").css({"border-top": "1px solid #c8c8c8"});
         startview(); // 가로크기의 따른 네비 유무 함수
