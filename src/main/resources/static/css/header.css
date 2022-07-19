@@ -10,12 +10,10 @@
     font-size: 15px;
     margin: 20px 0 20px 0;
 }
-.top_board_data1{
+.top_title_slash{
     border-right: 3px solid black;
 }
-.top_board_data2{
-    border-right: 3px solid black;
-}
-.top_board_data3{
-    border-right: 3px solid black;
+.top_subtitle{
+    font-size: 20px;
+    font-weight: bold;
 }

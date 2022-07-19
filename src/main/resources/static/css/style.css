@@ -288,16 +288,3 @@ body{
     width: 100%;
     background-color: none !important;
 }
-
-
-/*.entityPickerDiv{ 작동안함 */
-/*    max-height:900px;*/
-/*    background-color: #fff;*/
-/*    padding: 2%;*/
-/*    overflow-y:scroll;	!* div 내 내용이 세로 길이를 초과하면 스크롤바가 생성됨. *!*/
-/*}*/
-
-/*#entityPickerDiv{*/
-/*    height: 50vh;*/
-/*    overflow-scrolling: auto;*/
-/*}*/

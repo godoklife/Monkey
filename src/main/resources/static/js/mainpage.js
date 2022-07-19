@@ -1,9 +1,27 @@
+startview();    // 모바일에서 접속했을 경우 class 제거 / 추가 하는 메서드
+
+// 모바일에서 접속할 경우 클래스(css) 변경
+function startview() {
+    if($(window).width() < 768){
+        document.getElementById('top_div').classList.remove('col-sm-8');
+        document.getElementById('top_div').classList.remove('offset-2');
+        $('.top_title_slash').css('border-right','0px');
+            // 모바일에서 전세계 확진자, 전세계 유증상자~~~ 우측 바 안보이도록 0px값 덮어씌움
+
+    }
+}
+
 
 function show_trollbox(){   // 트롤박스 펴고 접는 팡션
     if($("#trollbox")[0].clientHeight===0){
-        $("#trollbox").animate({width:"15.2vw",height:"50vh"},200);
+        $("#trollbox").animate({width:"480px",height:"640px"},200);
+        $("#trollbox").css('padding-top','20px');
+        $("#trollbox").css('padding-bottom','60px');
+
     }else{
-        $("#trollbox").animate({width:"0",height:"0"},200);
+        $("#trollbox").animate({width:"0",height:"0"},200);$("#trollbox").css('padding-top','20px');
+        $("#trollbox").css('padding-bottom','0');
+        $("#trollbox").css('padding-top','0');
     }
 }
 
@@ -61,13 +79,13 @@ $(document).ready(function (){
 
         let html='';
         if(sender===username){  // 내가 보낸 메시지라면
-            html+='<div class="alert alert-success">' +
+            html+='<div id="my_msg" class="alert alert-success ms-auto">' +
                 '          <span> '+sender+' : '+message+' </span>' +
                 '           <br>' +
                 '        </div>';
 
         }else{  // 다른사람이 보낸 메시지라면
-            html+='<div class="alert alert-secondary">' +
+            html+='<div id="your_msg" class="alert alert-secondary me-auto">' +
                 '          <span> '+sender+' : '+message+' </span>' +
                 '           <br>' +
                 '        </div>';
@@ -82,3 +100,4 @@ $(document).ready(function (){
 
     }
 });
+
