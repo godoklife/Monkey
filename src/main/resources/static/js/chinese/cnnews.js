@@ -19,12 +19,33 @@ function getcnnews() {
 
 // 사이드바
 
+startview();    // 모바일에서 접속했을 경우 class 제거 / 추가 하는 메서드
+
 // 모바일정도의 크기라면
 function startview() {
     if($(window).width() < 768){
         $("#floatMenu").css({"display" : "none"}); // 네비게이션 삭제
+        document.getElementById('top_div').classList.remove('col-sm-8');
+        document.getElementById('top_div').classList.remove('offset-2');
+        $('.top_title_slash').css('border-right','0px');
+            // 모바일에서 전세계 확진자, 전세계 유증상자~~~ 우측 바 안보이도록 0px값 덮어씌움
     }else{
         $("#floatMenu").css({"display" : ""}); // 네비게이션 생성
+    }
+}
+
+
+
+function show_trollbox(){   // 트롤박스 펴고 접는 팡션
+    if($("#trollbox")[0].clientHeight===0){
+        $("#trollbox").animate({width:"480px",height:"640px"},200);
+        $("#trollbox").css('padding-top','20px');
+        $("#trollbox").css('padding-bottom','60px');
+
+    }else{
+        $("#trollbox").animate({width:"0",height:"0"},200);$("#trollbox").css('padding-top','20px');
+        $("#trollbox").css('padding-bottom','0');
+        $("#trollbox").css('padding-top','0');
     }
 }
 
@@ -112,3 +133,4 @@ $(document).ready(function() {
     }).scroll();
 
 });
+
