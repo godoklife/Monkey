@@ -131,7 +131,6 @@ function showTable(index){  // 페이징처리
     endbtn = startbtn+10-1;
     if(endbtn>totalpage) endbtn = totalpage;
     if(endbtn===0) endbtn = 1;
-    alert('test')
     let tablecode = '<tr>\n' +
         '                        <th> </th>\n' +
         '                        <th>국가</th>\n' +
