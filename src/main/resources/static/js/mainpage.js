@@ -47,7 +47,9 @@ $(document).ready(function (){
 
     // 2. JS에서 제동하는 websocket 클래스 사용하기
         // 1) [/ws/chat] 해당 URL로 소켓 연결
-    let websocket = new WebSocket('wss://localhost/ws/chat');
+    // let websocket = new WebSocket('wss://localhost/ws/chat');
+        // 로컬에서 테스트용, 배포시 경로 수정 필요
+    let websocket = new WebSocket('wss://monkeypoxlive.kr/ws/chat');
 
     websocket.onmessage = onMessage;
     websocket.onopen = onOpen;
