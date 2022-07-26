@@ -32,6 +32,7 @@ public class TomcatConfig {
                 collection.addPattern("/*");
                 securityConstraint.addCollection(collection);
                 context.addConstraint(securityConstraint);
+
             }
         };
 

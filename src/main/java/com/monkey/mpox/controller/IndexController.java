@@ -1,14 +1,20 @@
 package com.monkey.mpox.controller;
 
+import com.monkey.mpox.config.IpAddress;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
 
     @GetMapping("/")
     public String mainpage(){
+        IpAddress whois = new IpAddress();
+        System.out.println("Test : "+whois.getUserIp());
         return "mainpage";
+
     }
 
     @GetMapping("/en")

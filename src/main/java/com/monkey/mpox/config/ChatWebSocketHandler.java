@@ -6,6 +6,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +24,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Override   // 소켓 메시지 송수신
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         super.handleTextMessage(session, message);
-
         for(WebSocketSession toReceiveSession : sessionList){
             toReceiveSession.sendMessage(message);
         }
-
         System.out.println("소켓 송수신 세션: "+session);
-        System.out.println("소켓 메시지 송수신 : "+message);
+        System.out.println("소켓 메시지 송수신 발생 - 시간 : "+ LocalDateTime.now()+" 내용 : "+message);
     }
 
     @Override   // 소켓 연결 해제
@@ -37,4 +36,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         System.out.println("소켓 연결 해제 : "+session);
         sessionList.remove(session);
     }
+
+
 }

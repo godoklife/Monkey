@@ -2,10 +2,20 @@ plugins {
     id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+//    id 'application'
+}
+
+//application {
+//    mainClass = 'org.gradle.sample.Main'
+//    applicationDefaultJvmArgs = ['-Djava.net.preferIPv4Stack=true']
+//}
+
+bootRun{
+    systemProperties System.properties
 }
 
 group = 'com.monkey'
-version = '0.0.1-SNAPSHOT'
+version = 'MASTERPIECE'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -30,3 +40,4 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
