@@ -87,3 +87,4 @@
 2022-08-06 16:44:56 200 GET /statistics/getdatadate HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 63204 39 127.0.0.1
 2022-08-06 16:44:56 200 GET /statistics/getgeochartdata HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6778 62 127.0.0.1
 2022-08-06 16:44:56 200 GET /statistics/getgeochartdata HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6778 56 127.0.0.1
+test
