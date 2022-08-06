@@ -25,7 +25,7 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-tomcatlog
+tomcatlog/
 
 ### NetBeans ###
 /nbproject/private/
