@@ -1,0 +1,89 @@
+2022-08-06 16:19:20 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:20 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:20 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 200 GET / HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 - 127.0.0.1 13761 122 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/global.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1640 13 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/integrated.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1352 2 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/mpinfo.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 2014 3 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/travel.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 318 1 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/mpinfo.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 13686 4 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/design.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 388 2 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/mainpage.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1457 2 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/header.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 341 2 127.0.0.1
+2022-08-06 16:19:24 200 GET /css/news.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 509 2 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/news.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 792 3 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/sidechart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 7565 3 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/travel.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 4021 1 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/chart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 13030 1 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/linegraph.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 11118 1 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/sortbarchart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 3592 1 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:24 200 GET /js/mainpage.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 3674 1 127.0.0.1
+2022-08-06 16:19:24 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:19:25 200 GET /getnews HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6265 49 127.0.0.1
+2022-08-06 16:19:25 200 GET /travel/gettravel HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 117978 131 127.0.0.1
+2022-08-06 16:19:28 200 GET /statistics/loaddata?language=kr HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 14 3680 127.0.0.1
+2022-08-06 16:19:28 200 GET /statistics/getdatadate HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 63204 41 127.0.0.1
+2022-08-06 16:19:28 200 GET /statistics/getgeochartdata HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6778 60 127.0.0.1
+2022-08-06 16:19:29 200 GET /statistics/getgeochartdata HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6778 54 127.0.0.1
+2022-08-06 16:19:29 404 GET /favicon.ico HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 111 42 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 200 GET / HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 - 127.0.0.1 13761 120 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/global.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1640 14 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/integrated.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1352 1 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/mpinfo.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 2014 1 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/travel.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 318 1 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/news.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 509 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/travel.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 4021 1 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/chart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 13030 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/linegraph.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 11118 2 127.0.0.1
+2022-08-06 16:44:53 200 GET / HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 - 127.0.0.1 13761 4 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/design.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 388 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/mainpage.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1457 3 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/header.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 341 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/news.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 792 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/mpinfo.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 13686 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/sortbarchart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 3592 3 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/global.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1640 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/integrated.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1352 3 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/news.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 509 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/travel.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 318 5 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/header.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 341 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/design.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 388 4 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/mpinfo.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 2014 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /css/mainpage.css HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 1457 3 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/mpinfo.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 13686 4 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/news.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 792 3 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/sortbarchart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 3592 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/chart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 13030 3 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/linegraph.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 11118 4 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/travel.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 4021 4 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/mainpage.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 3674 1 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/sidechart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 7565 6 127.0.0.1
+2022-08-06 16:44:53 400 - - - 127.0.0.1 - 0 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/mainpage.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 3674 3 127.0.0.1
+2022-08-06 16:44:53 200 GET /js/sidechart.js HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 7565 2 127.0.0.1
+2022-08-06 16:44:53 200 GET /getnews HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6265 54 127.0.0.1
+2022-08-06 16:44:53 200 GET /travel/gettravel HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 117978 165 127.0.0.1
+2022-08-06 16:44:56 200 GET /statistics/loaddata?language=kr HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 14 2736 127.0.0.1
+2022-08-06 16:44:56 200 GET /statistics/getdatadate HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 63204 39 127.0.0.1
+2022-08-06 16:44:56 200 GET /statistics/getgeochartdata HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6778 62 127.0.0.1
+2022-08-06 16:44:56 200 GET /statistics/getgeochartdata HTTP/1.1 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 https://localhost/ 127.0.0.1 6778 56 127.0.0.1
