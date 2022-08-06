@@ -27,6 +27,8 @@ out/
 !**/src/test/**/out/
 tomcatlog/
 *.json
+*.log
+
 
 ### NetBeans ###
 /nbproject/private/
